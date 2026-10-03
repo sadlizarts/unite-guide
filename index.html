@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1230">
+<meta name="description" content="Panduan pribadi cara main tiap Pokémon UNITE di roster lo: skill, kapan dipakai, build, combo, matchup.">
+<title>UNITE Guide</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="UNITE Guide">
+<style>
+:root{
+  --bg:#070d22;--bg2:#0b1230;--panel:#111a3c;--panel2:#162250;--card:rgba(17,27,64,.92);
+  --text:#f4f7ff;--muted:#a9b6d6;--line:rgba(255,255,255,.09);
+  --accent:#53d6ff;--accent2:#8b7bff;--gold:#ffd45f;--good:#62e6a6;--danger:#ff768a;--warn:#ffb15e;
+  --r-penyerang:#ff7a59;--r-serba:#b48cff;--r-pelari:#5ad1ff;--r-defender:#62e6a6;--r-suporter:#ffd45f;
+  --shadow:0 14px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:radial-gradient(circle at 15% -10%,#22377a 0,transparent 38%),linear-gradient(165deg,var(--bg),#06091a 70%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+body{padding-bottom:calc(env(safe-area-inset-bottom) + 24px)}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--accent)}
+.hidden{display:none!important}
+.app{max-width:960px;margin:0 auto;padding:0 14px}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 0 10px;background:linear-gradient(180deg,rgba(7,13,34,.98),rgba(7,13,34,.86));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.topbar .brand{font-weight:900;letter-spacing:.02em;font-size:17px;display:flex;align-items:center;gap:8px}
+.topbar .brand small{font-size:11px;color:var(--accent);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.iconbtn{border:1px solid var(--line);background:#0e1738;border-radius:12px;padding:9px 12px;cursor:pointer;font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.iconbtn:active{transform:scale(.97)}
+.spacer{flex:1}
+#installBtn{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#06112a;border:0}
+
+/* home */
+.hero{padding:16px 0 10px}
+.hero h1{font-size:clamp(26px,6vw,40px);line-height:1.05;margin:0 0 6px}
+.hero p{margin:0;color:var(--muted);line-height:1.5;font-size:14px}
+.toolbar{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0}
+.toolbar input{width:100%;background:#0e1738;border:1px solid var(--line);border-radius:14px;padding:12px 14px;outline:none}
+.toolbar input:focus{border-color:var(--accent)}
+.chips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:#0e1738;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+.chip.active{background:var(--accent);color:#06112a;border-color:var(--accent)}
+.sortrow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:2px 0 10px}
+.sortrow select{background:#0e1738;border:1px solid var(--line);border-radius:10px;padding:6px 8px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:800px){.grid{grid-template-columns:repeat(6,1fr)}}
+.pcard{position:relative;padding:0;border:1px solid var(--line);background:#0c1534;border-radius:16px;overflow:hidden;cursor:pointer;text-align:left;transition:.15s;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.pcard:hover{transform:translateY(-2px);border-color:rgba(83,214,255,.4)}
+.pcard img{display:block;width:100%;aspect-ratio:237/342;object-fit:cover}
+.pcard .nm{padding:8px 8px 3px;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .rl{padding:0 8px 9px;font-size:10px;font-weight:800;color:var(--muted)}
+.pcard .sim{position:absolute;top:7px;left:7px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900;color:var(--gold)}
+.pcard .main{position:absolute;top:7px;right:7px;background:var(--gold);color:#201700;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900}
+.pcard .trial{position:absolute;top:7px;right:7px;background:var(--warn);color:#201700;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900}
+.rolebar{height:4px}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+.legend{margin:14px 0 0;padding:12px 14px;border:1px dashed var(--line);border-radius:14px;font-size:12px;color:var(--muted);line-height:1.55}
+
+/* detail */
+.dhead{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:14px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow);margin-top:6px}
+.dhead img{width:100%;border-radius:14px;aspect-ratio:237/342;object-fit:cover;background:#0b1430}
+.dname{font-size:26px;font-weight:900;line-height:1.05;margin:2px 0 6px}
+.tag{color:#dbe4ff;font-size:13px;line-height:1.5}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px}
+.pill{padding:5px 9px;border-radius:999px;background:#0c1835;border:1px solid var(--line);font-size:11px;font-weight:800;color:#dbe6ff}
+.pill.role{border-color:transparent;color:#071022}
+.sim{margin-top:8px;padding:10px;border-radius:13px;background:rgba(83,214,255,.08);border:1px solid rgba(83,214,255,.18)}
+.sim-row{display:flex;justify-content:space-between;font-size:12px;font-weight:800}
+.meter{height:7px;margin-top:6px;border-radius:99px;background:#081127;overflow:hidden}
+.meter>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px}
+.small{font-size:12px;color:var(--muted);line-height:1.5}
+
+.tabs{position:sticky;top:58px;z-index:25;display:flex;gap:6px;overflow-x:auto;padding:10px 0;background:linear-gradient(180deg,rgba(7,13,34,.98),rgba(7,13,34,.9));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid var(--line);background:#0e1738;border-radius:12px;padding:9px 13px;font-size:13px;font-weight:800;cursor:pointer}
+.tab.active{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#06112a;border-color:transparent}
+.pane{display:none;flex-direction:column;gap:12px}
+.pane.active{display:flex}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}
+.card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.card h3{font-size:14px;margin:12px 0 6px;color:#e9efff}
+.prose{font-size:14px;line-height:1.65;color:#e6ecff}
+.kv{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:640px){.kv{grid-template-columns:1fr 1fr}}
+.kv .box{background:rgba(4,12,30,.4);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
+.kv .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:900;margin-bottom:4px}
+.kv .val{font-size:13.5px;line-height:1.55;color:#e6ecff}
+.callout{padding:12px 14px;border-radius:14px;background:linear-gradient(90deg,rgba(255,212,95,.12),rgba(139,123,255,.08));border:1px solid rgba(255,212,95,.28);font-size:13.5px;line-height:1.6}
+.callout b{color:var(--gold)}
+.slot{background:rgba(4,12,30,.38);border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:10px}
+.slot-title{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.base{font-size:15px;font-weight:900;margin:4px 0 2px}
+.base small{font-weight:700;color:var(--muted);font-size:11px;margin-left:6px}
+.base-desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.move{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#0f1b3b;border-radius:14px;padding:12px;margin-top:8px;cursor:pointer;transition:.15s}
+.move.selected{border-color:var(--accent);background:linear-gradient(180deg,#12284f,#0f1b3b);box-shadow:0 0 0 2px rgba(83,214,255,.12) inset}
+.move-name{font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.move-name .lv{font-size:11px;color:var(--muted);font-weight:800}
+.check{opacity:0;font-size:12px;color:var(--good)}
+.move.selected .check{opacity:1}
+.desc{font-size:13px;line-height:1.55;color:#d6e0f8;margin-top:6px}
+.when{margin-top:8px;padding-top:8px;border-top:1px dashed rgba(255,255,255,.1);font-size:12.5px;line-height:1.55}
+.when b{color:var(--good)}
+.when.avoid b{color:var(--danger)}
+.when.up b{color:var(--accent)}
+.unite{padding:13px;border-radius:16px;background:linear-gradient(135deg,rgba(139,123,255,.18),rgba(255,212,95,.08));border:1px solid rgba(139,123,255,.28)}
+.buildbox{margin-top:10px;padding:12px 14px;background:linear-gradient(90deg,rgba(139,123,255,.14),rgba(83,214,255,.09));border:1px solid rgba(139,123,255,.26);border-radius:14px}
+.build-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#b7c6f1;font-weight:900}
+.build-value{font-weight:900;margin-top:4px;line-height:1.4}
+
+.build{border:1px solid var(--line);border-radius:16px;padding:13px;background:rgba(4,12,30,.38);margin-top:10px}
+.build.rec{border-color:rgba(255,212,95,.4)}
+.build .bh{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.build .bn{font-weight:900;font-size:15px;line-height:1.3}
+.badge{flex:0 0 auto;font-size:10px;font-weight:900;padding:4px 8px;border-radius:999px;background:var(--gold);color:#201700}
+.build .st{font-size:13px;color:#d6e0f8;line-height:1.5;margin:6px 0 8px}
+.items{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px}
+.item{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.45;background:#0f1b3b;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.item .ic{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:13px;background:rgba(83,214,255,.15)}
+.item.bi .ic{background:rgba(255,212,95,.18)}
+.item b{display:block;font-size:12.5px}
+.steps{margin:6px 0 0;padding-left:0;list-style:none;counter-reset:s}
+.steps li{position:relative;padding:7px 0 7px 34px;font-size:13px;line-height:1.5;counter-increment:s;border-top:1px dashed rgba(255,255,255,.08)}
+.steps li:first-child{border-top:0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:7px;width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#06112a;font-weight:900;font-size:12px;display:grid;place-items:center}
+.usebtn{margin-top:10px;width:100%;border:1px solid rgba(83,214,255,.4);background:rgba(83,214,255,.1);border-radius:12px;padding:9px;font-weight:800;font-size:13px;cursor:pointer}
+.usebtn.on{background:var(--accent);color:#06112a}
+.sit{display:grid;grid-template-columns:1fr;gap:8px}
+.sit .box{background:rgba(4,12,30,.4);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
+.sit .lbl{font-size:12px;font-weight:900;margin-bottom:4px;display:flex;gap:6px;align-items:center}
+.sit .val{font-size:13.5px;line-height:1.55;color:#e6ecff}
+ul.plain{margin:0;padding-left:18px}
+ul.plain li{margin:7px 0;line-height:1.5;font-size:13.5px}
+.mu{border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:rgba(4,12,30,.38);margin-top:8px}
+.mu .mn{font-weight:900;font-size:14px;display:flex;align-items:center;gap:8px}
+.mu .mn .lk{font-size:11px;font-weight:800;color:var(--accent);cursor:pointer;text-decoration:underline}
+.mu .why{font-size:13px;color:#d6e0f8;margin-top:4px;line-height:1.5}
+.mu .how{font-size:12.5px;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.1);line-height:1.5}
+.mu .how b{color:var(--good)}
+.mu.bad{border-color:rgba(255,118,138,.35)} .mu.good{border-color:rgba(98,230,166,.35)}
+.src{font-size:11px;color:#8698bd;line-height:1.6;margin-top:4px;word-break:break-all}
+.src a{color:#9fdfff}
+.conf{display:inline-block;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:900;margin-left:6px}
+.conf.high{background:rgba(98,230,166,.2);color:var(--good)}.conf.medium{background:rgba(255,177,94,.2);color:var(--warn)}.conf.low{background:rgba(255,118,138,.2);color:var(--danger)}
+.navrow{display:flex;gap:8px;margin-top:4px}
+.navrow .iconbtn{flex:1;justify-content:center}
+footer{margin:22px 0 0;font-size:11px;color:#7f90b6;line-height:1.6;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1a2a5a;border:1px solid var(--line);padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700;z-index:50;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <button id="backBtn" class="iconbtn hidden" aria-label="Kembali">← Roster</button>
+    <div class="brand"><span>🎮 UNITE Guide</span><small id="brandSub">Roster lo</small></div>
+    <div class="spacer"></div>
+    <button id="installBtn" class="iconbtn hidden">⬇ Install</button>
+  </div>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="hero">
+      <h1>Cara main tiap Pokémon lo</h1>
+      <p>Pilih Pokémon → lihat skill, kapan ditekan, build & combo, situasi, dan matchup. Angka ⭐ = seberapa mirip feel-nya sama Cinderace (bukan tier list).</p>
+    </div>
+    <div class="toolbar">
+      <input id="search" placeholder="Cari Pokémon… (misal: pika)" autocomplete="off">
+      <div class="chips" id="roleChips"></div>
+      <div class="sortrow">Urutkan: <select id="sort">
+        <option value="sim">Paling mirip Cinderace</option>
+        <option value="name">Nama A–Z</option>
+        <option value="role">Role</option>
+        <option value="diff">Paling gampang dulu</option>
+      </select></div>
+    </div>
+    <div id="grid" class="grid"></div>
+    <div class="legend">⭐ = kemiripan feel dengan Cinderace (0–10). 🔥 = Pokémon utama lo. ⏱ = trial. Semua deskripsi adalah ringkasan praktis berbahasa santai, bukan teks game verbatim.</div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="detail" class="hidden">
+    <div class="dhead">
+      <img id="dImg" alt="">
+      <div>
+        <div id="dName" class="dname"></div>
+        <div id="dTag" class="tag"></div>
+        <div id="dPills" class="pills"></div>
+        <div class="sim">
+          <div class="sim-row"><span>⭐ Mirip Cinderace</span><span id="dSim"></span></div>
+          <div class="meter"><span id="dSimBar"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-pane="main">🎮 Cara main</button>
+      <button class="tab" data-pane="skill">⚔️ Skill</button>
+      <button class="tab" data-pane="build">🧰 Build & Combo</button>
+      <button class="tab" data-pane="sit">🧠 Situasi</button>
+      <button class="tab" data-pane="match">🆚 Matchup</button>
+    </div>
+
+    <div id="pane-main" class="pane active"></div>
+    <div id="pane-skill" class="pane"></div>
+    <div id="pane-build" class="pane"></div>
+    <div id="pane-sit" class="pane"></div>
+    <div id="pane-match" class="pane"></div>
+
+    <div class="navrow">
+      <button id="prevBtn" class="iconbtn">◀ Sebelumnya</button>
+      <button id="nextBtn" class="iconbtn">Berikutnya ▶</button>
+    </div>
+  </section>
+
+  <footer id="footer"></footer>
+</div>
+<div id="toast" class="toast"></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+const DATA=window.UNITE_DATA||[];
+const bySlug=Object.fromEntries(DATA.map(p=>[p.slug,p]));
+const byName=Object.fromEntries(DATA.map(p=>[p.name.toLowerCase(),p]));
+const ROLE_COLOR={'Penyerang':'var(--r-penyerang)','Serba-Bisa':'var(--r-serba)','Pelari Cepat':'var(--r-pelari)','Defender':'var(--r-defender)','Suporter':'var(--r-suporter)'};
+const ROLE_ICON={'Penyerang':'🎯','Serba-Bisa':'⚔️','Pelari Cepat':'⚡','Defender':'🛡️','Suporter':'💚'};
+const DIFF_ORDER={'Pemula':0,'Menengah':1,'Ahli':2};
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null}};
+const state={
+  role:LS('ug.role')||'all', sort:LS('ug.sort')||'sim', q:'',
+  builds:JSON.parse(LS('ug.builds')||'{}'), tab:'main'
+};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const $=id=>document.getElementById(id);
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
+
+/* ---------- HOME ---------- */
+const ROLES=['all','Penyerang','Serba-Bisa','Pelari Cepat','Defender','Suporter'];
+function renderChips(){
+  $('roleChips').innerHTML=ROLES.map(r=>`<button class="chip ${state.role===r?'active':''}" data-r="${r}">${r==='all'?'Semua':ROLE_ICON[r]+' '+r}</button>`).join('');
+  $('roleChips').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{state.role=b.dataset.r;LS('ug.role',state.role);renderChips();renderGrid();});
+}
+function filtered(){
+  const q=state.q.trim().toLowerCase();
+  let arr=DATA.filter(p=>(state.role==='all'||p.role===state.role)&&(!q||p.name.toLowerCase().includes(q)||p.slug.includes(q)));
+  const s=state.sort;
+  arr.sort((a,b)=>{
+    if(s==='sim')return b.cinderace.similarity-a.cinderace.similarity||a.name.localeCompare(b.name);
+    if(s==='name')return a.name.localeCompare(b.name);
+    if(s==='role')return ROLES.indexOf(a.role)-ROLES.indexOf(b.role)||b.cinderace.similarity-a.cinderace.similarity;
+    if(s==='diff')return (DIFF_ORDER[a.difficulty]??1)-(DIFF_ORDER[b.difficulty]??1)||b.cinderace.similarity-a.cinderace.similarity;
+    return 0;
+  });
+  return arr;
+}
+function renderGrid(){
+  const arr=filtered();
+  if(!arr.length){$('grid').innerHTML='<div class="empty" style="grid-column:1/-1">Nggak ada yang cocok.</div>';return;}
+  $('grid').innerHTML=arr.map(p=>`<button class="pcard" data-slug="${p.slug}">
+    <img src="${p.image}" alt="${esc(p.name)}" loading="lazy">
+    <span class="sim">⭐ ${p.cinderace.similarity}</span>
+    ${p.slug==='cinderace'?'<span class="main">🔥 MAIN</span>':p.status==='Trial'?'<span class="trial">⏱ Trial</span>':''}
+    <div class="rolebar" style="background:${ROLE_COLOR[p.role]||'#888'}"></div>
+    <div class="nm">${esc(p.name)}</div>
+    <div class="rl">${ROLE_ICON[p.role]||''} ${esc(p.role)} · ${esc(p.difficulty)}</div>
+  </button>`).join('');
+  $('grid').querySelectorAll('.pcard').forEach(b=>b.onclick=()=>go(b.dataset.slug));
+}
+
+/* ---------- DETAIL ---------- */
+function linkName(name){
+  const p=byName[String(name).toLowerCase()];
+  return p?`<span class="lk" data-go="${p.slug}">${esc(name)} ↗</span>`:esc(name);
+}
+function kv(lbl,val){return `<div class="box"><div class="lbl">${lbl}</div><div class="val">${esc(val)}</div></div>`;}
+function renderMain(p){
+  const c=p.cinderace;
+  $('pane-main').innerHTML=`
+  <div class="card"><h2>🎮 Identitas & cara kerja</h2>
+    <div class="kv">
+      ${kv('Passive — '+esc(p.passive.name),p.passive.desc)}
+      ${kv('Basic attack',p.basicAttack)}
+      ${kv('Evolusi',p.evolutions)}
+      ${kv('Lane terbaik',(p.lanes||[]).join(' / ')+'. '+p.laneNote)}
+    </div></div>
+  <div class="card"><h2>⏱️ Early game & power spike</h2>
+    <div class="kv">
+      ${kv('Menit 0–2',p.earlyGame)}
+      ${kv('Kapan jadi kuat',p.powerSpike)}
+    </div></div>
+  <div class="card"><h2>🔥 ${p.slug==='cinderace'?'Tips lanjutan buat lo':'Kalau lo biasa Cinderace…'}</h2>
+    <div class="callout">${esc(c.note)}</div></div>`;
+}
+function moveBtn(p,slot,m){
+  const sel=state.builds[p.slug]?.[slot]===m.name;
+  return `<button class="move ${sel?'selected':''}" data-slot="${slot}" data-move="${esc(m.name)}">
+    <div class="move-name"><span>${esc(m.name)} <span class="lv">Lv${m.level}${m.upgradeLevel?' → +Lv'+m.upgradeLevel:''}</span></span><span class="check">✓ dipilih</span></div>
+    <div class="desc">${esc(m.desc)}</div>
+    <div class="when"><b>Kapan tekan:</b> ${esc(m.when)}</div>
+    ${m.avoid?`<div class="when avoid"><b>Jangan:</b> ${esc(m.avoid)}</div>`:''}
+    ${m.upgradeNote?`<div class="when up"><b>Upgrade:</b> ${esc(m.upgradeNote)}</div>`:''}
+  </button>`;
+}
+function slotHtml(p,key,label){
+  const s=p[key];
+  return `<div class="slot"><div class="slot-title">${label}</div>
+    <div class="base">${esc(s.base.name)}<small>Lv${s.base.level} · skill awal</small></div>
+    <div class="base-desc">${esc(s.base.desc)}</div>
+    ${s.choices.map(m=>moveBtn(p,key,m)).join('')}
+  </div>`;
+}
+function currentBuildText(p){
+  const b=state.builds[p.slug]||{};
+  return `${b.slot1||'—'} + ${b.slot2||'—'}`;
+}
+function renderSkill(p){
+  $('pane-skill').innerHTML=`
+  <div class="card"><h2>⚔️ Skill & cabang move</h2>
+    <div class="small">Tap move buat nandain build yang lo pakai; pilihan tersimpan di HP lo.</div>
+    ${slotHtml(p,'slot1','Skill slot 1')}
+    ${slotHtml(p,'slot2','Skill slot 2')}
+    <div class="buildbox"><div class="build-title">Build yang lo pilih</div><div class="build-value" id="selBuild">${esc(currentBuildText(p))}</div></div>
+  </div>
+  <div class="card"><h2>✨ Unite Move</h2>
+    <div class="unite">
+      <div class="move-name"><span>${esc(p.unite.name)} <span class="lv">Lv${p.unite.level}</span></span></div>
+      <div class="desc">${esc(p.unite.desc)}</div>
+      <div class="when"><b>Kapan pakai:</b> ${esc(p.unite.when)}</div>
+      ${p.unite.avoid?`<div class="when avoid"><b>Jangan:</b> ${esc(p.unite.avoid)}</div>`:''}
+    </div></div>`;
+  $('pane-skill').querySelectorAll('.move').forEach(btn=>btn.onclick=()=>{
+    state.builds[p.slug]=state.builds[p.slug]||{};
+    state.builds[p.slug][btn.dataset.slot]=btn.dataset.move;
+    LS('ug.builds',JSON.stringify(state.builds));
+    renderSkill(p);renderBuild(p);
+  });
+}
+function buildMatches(p,b){
+  const cur=state.builds[p.slug]||{};
+  const names=b.moves.map(x=>x.split(' (')[0]);
+  const c1=(cur.slot1||'').split(' (')[0],c2=(cur.slot2||'').split(' (')[0];
+  return names.includes(c1)&&names.includes(c2)&&c1&&c2;
+}
+function renderBuild(p){
+  $('pane-build').innerHTML=`<div class="card"><h2>🧰 Build, item & combo</h2>
+    <div class="small">Build ⭐ = rekomendasi utama. Tap "Pakai build ini" buat set move di tab Skill.</div>
+    ${p.builds.map((b,i)=>`<div class="build ${b.recommended?'rec':''}">
+      <div class="bh"><div class="bn">${esc(b.name)}</div>${b.recommended?'<span class="badge">⭐ Rekomendasi</span>':''}</div>
+      <div class="st">${esc(b.style)}</div>
+      <h3>Held items</h3>
+      <div class="items">${b.heldItems.map(h=>`<div class="item"><div class="ic">🎒</div><div><b>${esc(h.name)}</b>${esc(h.why)}</div></div>`).join('')}
+        <div class="item bi"><div class="ic">🧪</div><div><b>Battle item: ${esc(b.battleItem.name)}</b>${esc(b.battleItem.why)}</div></div></div>
+      <h3>Urutan combo</h3>
+      <ol class="steps">${b.combo.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>
+      ${b.comboNote?`<div class="small" style="margin-top:6px">💡 ${esc(b.comboNote)}</div>`:''}
+      <button class="usebtn ${buildMatches(p,b)?'on':''}" data-i="${i}">${buildMatches(p,b)?'✓ Build ini aktif':'Pakai build ini'}</button>
+    </div>`).join('')}
+  </div>`;
+  $('pane-build').querySelectorAll('.usebtn').forEach(btn=>btn.onclick=()=>{
+    const b=p.builds[+btn.dataset.i];
+    const s1=p.slot1.choices.find(c=>b.moves.some(m=>m.split(' (')[0]===c.name.split(' (')[0]));
+    const s2=p.slot2.choices.find(c=>b.moves.some(m=>m.split(' (')[0]===c.name.split(' (')[0]));
+    state.builds[p.slug]={slot1:s1?s1.name:'',slot2:s2?s2.name:''};
+    LS('ug.builds',JSON.stringify(state.builds));
+    renderSkill(p);renderBuild(p);toast('Build diset: '+b.moves.join(' + '));
+  });
+}
+function renderSit(p){
+  const s=p.situations||{};
+  const rows=[['🗡️ Gank / dikeroyok',s.gank],['🏃 Kabur / survive',s.escape],['🐉 Objective (Rayquaza, Regieleki, dll)',s.objective],['🤜 Duel 1v1',s.duel],['👥 Teamfight 5v5',s.teamfight]];
+  $('pane-sit').innerHTML=`<div class="card"><h2>🧠 Apa yang ditekan di situasi ini</h2>
+    <div class="sit">${rows.filter(r=>r[1]).map(r=>`<div class="box"><div class="lbl">${r[0]}</div><div class="val">${esc(r[1])}</div></div>`).join('')}</div></div>
+  <div class="card"><h2>🚫 Kesalahan umum</h2><ul class="plain">${(p.mistakes||[]).map(m=>`<li>${esc(m)}</li>`).join('')}</ul></div>`;
+}
+function renderMatch(p){
+  const c=p.counters||{hardFor:[],goodAgainst:[]};
+  $('pane-match').innerHTML=`<div class="card"><h2>😬 Bikin susah</h2>
+    ${c.hardFor.map(m=>`<div class="mu bad"><div class="mn">${linkName(m.name)}</div><div class="why">${esc(m.why)}</div>${m.how?`<div class="how"><b>Cara ngatasin:</b> ${esc(m.how)}</div>`:''}</div>`).join('')}</div>
+  <div class="card"><h2>😎 Enak dilawan</h2>
+    ${c.goodAgainst.map(m=>`<div class="mu good"><div class="mn">${linkName(m.name)}</div><div class="why">${esc(m.why)}</div></div>`).join('')}</div>
+  <div class="card"><h2>📚 Sumber & catatan <span class="conf ${esc(p.confidence)}">${esc(p.confidence)}</span></h2>
+    ${p.notes?`<div class="small" style="margin-bottom:8px">${esc(p.notes)}</div>`:''}
+    <div class="src">${(p.sources||[]).map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//,''))}</a>`).join('<br>')}</div></div>`;
+  $('pane-match').querySelectorAll('[data-go]').forEach(el=>el.onclick=()=>go(el.dataset.go));
+}
+function renderDetail(p){
+  $('dImg').src=p.image;$('dImg').alt=p.name;
+  $('dName').textContent=p.name;$('dTag').textContent=p.tagline;
+  $('dPills').innerHTML=`<span class="pill role" style="background:${ROLE_COLOR[p.role]}">${ROLE_ICON[p.role]} ${esc(p.role)}</span>
+    <span class="pill">${esc(p.damage)}</span><span class="pill">${esc(p.range)}</span><span class="pill">Kesulitan: ${esc(p.difficulty)}</span>
+    ${(p.lanes||[]).map(l=>`<span class="pill">📍 ${esc(l)}</span>`).join('')}
+    ${p.status==='Trial'?'<span class="pill" style="background:var(--warn);color:#201700">⏱ Trial</span>':''}`;
+  $('dSim').textContent=p.cinderace.similarity+'/10';$('dSimBar').style.width=(p.cinderace.similarity*10)+'%';
+  renderMain(p);renderSkill(p);renderBuild(p);renderSit(p);renderMatch(p);
+  setTab(state.tab);
+  $('brandSub').textContent=p.name;
+  const list=filtered(), i=list.findIndex(x=>x.slug===p.slug);
+  const prev=list[(i-1+list.length)%list.length], next=list[(i+1)%list.length];
+  $('prevBtn').textContent='◀ '+(prev?prev.name:'');$('nextBtn').textContent=(next?next.name:'')+' ▶';
+  $('prevBtn').onclick=()=>go(prev.slug);$('nextBtn').onclick=()=>go(next.slug);
+}
+function setTab(t){
+  state.tab=t;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.pane===t));
+  document.querySelectorAll('.pane').forEach(b=>b.classList.toggle('active',b.id==='pane-'+t));
+}
+$('tabs').querySelectorAll('.tab').forEach(b=>b.onclick=()=>{setTab(b.dataset.pane);});
+
+/* ---------- ROUTING ---------- */
+function go(slug){location.hash='#/p/'+slug;}
+function route(){
+  const m=location.hash.match(/^#\/p\/([a-z0-9-]+)/);
+  const p=m&&bySlug[m[1]];
+  if(p){
+    $('home').classList.add('hidden');$('detail').classList.remove('hidden');$('backBtn').classList.remove('hidden');
+    renderDetail(p);LS('ug.last',p.slug);window.scrollTo({top:0});
+  }else{
+    $('detail').classList.add('hidden');$('home').classList.remove('hidden');$('backBtn').classList.add('hidden');
+    $('brandSub').textContent='Roster lo';renderGrid();
+  }
+}
+$('backBtn').onclick=()=>{location.hash='';};
+window.addEventListener('hashchange',route);
+$('search').oninput=e=>{state.q=e.target.value;renderGrid();};
+$('sort').value=state.sort;$('sort').onchange=e=>{state.sort=e.target.value;LS('ug.sort',state.sort);renderGrid();};
+renderChips();
+$('footer').innerHTML=`Data versi ${esc(window.UNITE_VERSION||'')} · ${DATA.length} Pokémon · Nama move/level dicek silang Serebii + Bulbapedia; build & item dari game8/dittobase; sebagian matchup adalah inferensi mekanik (lihat catatan tiap Pokémon). Ringkasan praktis, bukan teks game verbatim.`;
+route();
+
+/* ---------- PWA ---------- */
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').classList.remove('hidden');});
+$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').classList.add('hidden');};
+window.addEventListener('appinstalled',()=>{$('installBtn').classList.add('hidden');toast('Terinstal! Buka dari home screen.');});
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').then(reg=>{
+    reg.addEventListener('updatefound',()=>{const nw=reg.installing;nw&&nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)toast('Versi baru siap — tutup & buka lagi app-nya.');});});
+  }).catch(()=>{});});
+}
+})();
+</script>
+</body>
+</html>
