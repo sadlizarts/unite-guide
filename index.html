@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b1230">
-<meta name="description" content="Panduan pribadi cara main tiap Pokémon UNITE di roster lo: skill, kapan dipakai, build, combo, matchup.">
+<meta name="theme-color" content="#0a1129">
+<meta name="description" content="Panduan pribadi cara main tiap Pokémon UNITE di roster kamu: jurus, kapan dipakai, build, perbandingan, dan kamus istilah.">
 <title>UNITE Guide</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -13,439 +13,708 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="UNITE Guide">
 <style>
+@font-face{font-family:"Lexend";src:url(fonts/lexend-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Lexend";src:url(fonts/lexend-800.woff2) format("woff2");font-weight:800;font-display:swap}
 :root{
-  --bg:#070d22;--bg2:#0b1230;--panel:#111a3c;--panel2:#162250;--card:rgba(17,27,64,.92);
-  --text:#f4f7ff;--muted:#a9b6d6;--line:rgba(255,255,255,.09);
-  --accent:#53d6ff;--accent2:#8b7bff;--gold:#ffd45f;--good:#62e6a6;--danger:#ff768a;--warn:#ffb15e;
-  --r-penyerang:#ff7a59;--r-serba:#b48cff;--r-pelari:#5ad1ff;--r-defender:#62e6a6;--r-suporter:#ffd45f;
-  --shadow:0 14px 40px rgba(0,0,0,.35);
+  --bg:#070c1f;--surface:#0f1733;--surface2:#141e40;--raise:#1a2550;
+  --text:#eef2ff;--muted:#a3afcf;--faint:#7d8ab0;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --accent:#53d6ff;--accent-ink:#04121f;--violet:#8b7bff;--gold:#ffd45f;--fire:#ff8a5c;
+  --good:#5fe0a0;--bad:#ff8094;
+  --c1:#53d6ff;--c2:#ffb15e;--c3:#c39bff;
+  --r-penyerang:#ff8a5c;--r-serba:#c39bff;--r-pelari:#53d6ff;--r-defender:#5fe0a0;--r-suporter:#ffd45f;
+  --display:"Lexend",ui-sans-serif,system-ui,sans-serif;
+  --body:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --radius:18px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;background:radial-gradient(circle at 15% -10%,#22377a 0,transparent 38%),linear-gradient(165deg,var(--bg),#06091a 70%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
-body{padding-bottom:calc(env(safe-area-inset-bottom) + 24px)}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:15px;line-height:1.55;min-height:100vh}
+body{background:radial-gradient(1200px 500px at 10% -10%,rgba(83,214,255,.10),transparent 60%),radial-gradient(900px 400px at 100% 0,rgba(139,123,255,.10),transparent 60%),var(--bg);padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 button,input,select{font:inherit;color:inherit}
 a{color:var(--accent)}
 .hidden{display:none!important}
-.app{max-width:960px;margin:0 auto;padding:0 14px}
+.app{max-width:920px;margin:0 auto;padding:0 16px}
+.ico{width:20px;height:20px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+.ico.sm{width:16px;height:16px}
+h1,h2,h3,.display{font-family:var(--display);font-weight:800;letter-spacing:-.01em}
 
 /* top bar */
-.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 0 10px;background:linear-gradient(180deg,rgba(7,13,34,.98),rgba(7,13,34,.86));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.topbar .brand{font-weight:900;letter-spacing:.02em;font-size:17px;display:flex;align-items:center;gap:8px}
-.topbar .brand small{font-size:11px;color:var(--accent);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.iconbtn{border:1px solid var(--line);background:#0e1738;border-radius:12px;padding:9px 12px;cursor:pointer;font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:6px}
-.iconbtn:active{transform:scale(.97)}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 0;background:rgba(7,12,31,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.topbar.scrolled{border-bottom-color:var(--line)}
+.brand{font-family:var(--display);font-weight:800;font-size:17px;display:flex;align-items:center;gap:8px;min-width:0}
+.brand .sub{font-family:var(--body);font-size:13px;font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand img{width:28px;height:28px;border-radius:8px;object-fit:cover}
 .spacer{flex:1}
-#installBtn{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#06112a;border:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;color:var(--text)}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;border-color:transparent;padding:8px}
+.btn.block{width:100%}
 
-/* home */
-.hero{padding:16px 0 10px}
-.hero h1{font-size:clamp(26px,6vw,40px);line-height:1.05;margin:0 0 6px}
-.hero p{margin:0;color:var(--muted);line-height:1.5;font-size:14px}
-.toolbar{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0}
-.toolbar input{width:100%;background:#0e1738;border:1px solid var(--line);border-radius:14px;padding:12px 14px;outline:none}
-.toolbar input:focus{border-color:var(--accent)}
-.chips{display:flex;gap:7px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}
+/* bottom nav */
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(10,16,40,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.bottomnav .in{max-width:920px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+.bottomnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px 10px;color:var(--faint);text-decoration:none;font-size:12px;font-weight:700}
+.bottomnav a.on{color:var(--accent)}
+.bottomnav .ico{width:22px;height:22px}
+
+/* generic */
+.page-title{font-size:clamp(26px,6vw,36px);line-height:1.1;margin:18px 0 6px}
+.lead{color:var(--muted);margin:0 0 14px;font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.card+.card{margin-top:12px}
+.card h2{font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.card h2 .ico{color:var(--accent)}
+.kicker{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.muted{color:var(--muted)}
+.small{font-size:13px;color:var(--muted);line-height:1.5}
+.rows>.row{padding:12px 0;border-top:1px solid var(--line)}
+.rows>.row:first-child{border-top:0;padding-top:0}
+.rows>.row:last-child{padding-bottom:0}
+.row .lbl{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.row .val{font-size:15px;line-height:1.6}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;border:1px solid var(--line);background:#0e1738;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
-.chip.active{background:var(--accent);color:#06112a;border-color:var(--accent)}
-.sortrow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:2px 0 10px}
-.sortrow select{background:#0e1738;border:1px solid var(--line);border-radius:10px;padding:6px 8px;font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-@media(min-width:560px){.grid{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:800px){.grid{grid-template-columns:repeat(6,1fr)}}
-.pcard{position:relative;padding:0;border:1px solid var(--line);background:#0c1534;border-radius:16px;overflow:hidden;cursor:pointer;text-align:left;transition:.15s;box-shadow:0 6px 18px rgba(0,0,0,.25)}
-.pcard:hover{transform:translateY(-2px);border-color:rgba(83,214,255,.4)}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.chip .dot{width:8px;height:8px;border-radius:50%}
+.field{width:100%;background:var(--surface);border:1px solid var(--line2);border-radius:14px;padding:12px 14px 12px 42px;outline:none;font-size:15px}
+.field:focus{border-color:var(--accent)}
+.searchwrap{position:relative}
+.searchwrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--faint)}
+select.sel{background:var(--surface);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;font-size:13px}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:var(--surface2);font-size:12px;font-weight:700;color:var(--text)}
+.pill.role{color:#0b1020}
+.fireTag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--fire)}
+.fireTag .ico{width:15px;height:15px}
+
+/* stars */
+.stars{display:inline-flex;gap:2px;vertical-align:middle}
+.stars svg{width:16px;height:16px}
+.rlist .stars svg{width:13px;height:13px}
+.rating-row{display:grid;grid-template-columns:118px 1fr auto;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.rating-row:first-child{border-top:0}
+.rating-row .nm{font-size:14px;font-weight:700;display:flex;align-items:center;gap:7px}
+.rating-row .nm .ico{color:var(--muted);width:17px;height:17px}
+.rating-row .num{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:28px;text-align:right}
+
+/* roster grid */
+.toolbar{display:grid;gap:10px;margin:6px 0 14px}
+.sortrow{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(min-width:560px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:820px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.pcard{position:relative;padding:0;border:1px solid var(--line);background:var(--surface);border-radius:16px;overflow:hidden;cursor:pointer;text-align:left;transition:transform .15s,border-color .15s}
+.pcard:hover{transform:translateY(-2px);border-color:var(--line2)}
 .pcard img{display:block;width:100%;aspect-ratio:237/342;object-fit:cover}
-.pcard .nm{padding:8px 8px 3px;font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pcard .rl{padding:0 8px 9px;font-size:10px;font-weight:800;color:var(--muted)}
-.pcard .sim{position:absolute;top:7px;left:7px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900;color:var(--gold)}
-.pcard .main{position:absolute;top:7px;right:7px;background:var(--gold);color:#201700;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900}
-.pcard .trial{position:absolute;top:7px;right:7px;background:var(--warn);color:#201700;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:900}
-.rolebar{height:4px}
+.pcard .meta{display:flex;align-items:center;gap:6px;padding:8px 9px 9px;font-size:12px;font-weight:700;color:var(--muted)}
+.pcard .meta .rd{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.pcard .tag{position:absolute;top:7px;left:7px;display:inline-flex;align-items:center;gap:3px;background:rgba(5,9,24,.78);backdrop-filter:blur(6px);border-radius:999px;padding:3px 8px 3px 6px;font-size:12px;font-weight:800;color:var(--fire)}
+.pcard .tag .ico{width:13px;height:13px}
+.pcard .badge{position:absolute;top:7px;right:7px;background:var(--gold);color:#201700;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:800}
+.pcard .badge.trial{background:#ffb15e}
 .empty{padding:30px;text-align:center;color:var(--muted)}
-.legend{margin:14px 0 0;padding:12px 14px;border:1px dashed var(--line);border-radius:14px;font-size:12px;color:var(--muted);line-height:1.55}
 
 /* detail */
-.dhead{display:grid;grid-template-columns:118px 1fr;gap:14px;padding:14px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:var(--shadow);margin-top:6px}
-.dhead img{width:100%;border-radius:14px;aspect-ratio:237/342;object-fit:cover;background:#0b1430}
-.dname{font-size:26px;font-weight:900;line-height:1.05;margin:2px 0 6px}
-.tag{color:#dbe4ff;font-size:13px;line-height:1.5}
-.pills{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 6px}
-.pill{padding:5px 9px;border-radius:999px;background:#0c1835;border:1px solid var(--line);font-size:11px;font-weight:800;color:#dbe6ff}
-.pill.role{border-color:transparent;color:#071022}
-.sim{margin-top:8px;padding:10px;border-radius:13px;background:rgba(83,214,255,.08);border:1px solid rgba(83,214,255,.18)}
-.sim-row{display:flex;justify-content:space-between;font-size:12px;font-weight:800}
-.meter{height:7px;margin-top:6px;border-radius:99px;background:#081127;overflow:hidden}
-.meter>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));border-radius:99px}
-.small{font-size:12px;color:var(--muted);line-height:1.5}
+.dhead{display:flex;gap:14px;align-items:flex-start;margin:14px 0 4px}
+.dhead img{width:84px;border-radius:14px;aspect-ratio:237/342;object-fit:cover;flex:0 0 auto}
+.dname{font-size:28px;line-height:1.05;margin:0 0 6px}
+.dtag{font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 8px}
+.dpills{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tabs-wrap{position:sticky;top:56px;z-index:25;background:rgba(7,12,31,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin:10px -16px 12px;padding:8px 16px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px}
+.tab{display:flex;align-items:center;justify-content:center;gap:6px;border:0;background:transparent;border-radius:10px;padding:9px 4px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer}
+.tab .ico{width:17px;height:17px}
+.tab.on{background:var(--raise);color:var(--text)}
+@media(max-width:380px){.tab .ico{display:none}}
+.pane{display:none}
+.pane.on{display:block}
+.callout{border-radius:14px;padding:14px;background:linear-gradient(135deg,rgba(255,138,92,.12),rgba(139,123,255,.08));border:1px solid rgba(255,138,92,.25);font-size:15px;line-height:1.6}
+.sit .row .lbl .ico{color:var(--accent)}
 
-.tabs{position:sticky;top:58px;z-index:25;display:flex;gap:6px;overflow-x:auto;padding:10px 0;background:linear-gradient(180deg,rgba(7,13,34,.98),rgba(7,13,34,.9));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;border:1px solid var(--line);background:#0e1738;border-radius:12px;padding:9px 13px;font-size:13px;font-weight:800;cursor:pointer}
-.tab.active{background:linear-gradient(90deg,var(--accent2),var(--accent));color:#06112a;border-color:transparent}
-.pane{display:none;flex-direction:column;gap:12px}
-.pane.active{display:flex}
-.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}
-.card h2{font-size:16px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
-.card h3{font-size:14px;margin:12px 0 6px;color:#e9efff}
-.prose{font-size:14px;line-height:1.65;color:#e6ecff}
-.kv{display:grid;grid-template-columns:1fr;gap:8px}
-@media(min-width:640px){.kv{grid-template-columns:1fr 1fr}}
-.kv .box{background:rgba(4,12,30,.4);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
-.kv .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:900;margin-bottom:4px}
-.kv .val{font-size:13.5px;line-height:1.55;color:#e6ecff}
-.callout{padding:12px 14px;border-radius:14px;background:linear-gradient(90deg,rgba(255,212,95,.12),rgba(139,123,255,.08));border:1px solid rgba(255,212,95,.28);font-size:13.5px;line-height:1.6}
-.callout b{color:var(--gold)}
-.slot{background:rgba(4,12,30,.38);border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:10px}
-.slot-title{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
-.base{font-size:15px;font-weight:900;margin:4px 0 2px}
-.base small{font-weight:700;color:var(--muted);font-size:11px;margin-left:6px}
-.base-desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:8px}
-.move{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#0f1b3b;border-radius:14px;padding:12px;margin-top:8px;cursor:pointer;transition:.15s}
-.move.selected{border-color:var(--accent);background:linear-gradient(180deg,#12284f,#0f1b3b);box-shadow:0 0 0 2px rgba(83,214,255,.12) inset}
-.move-name{font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:8px}
-.move-name .lv{font-size:11px;color:var(--muted);font-weight:800}
-.check{opacity:0;font-size:12px;color:var(--good)}
-.move.selected .check{opacity:1}
-.desc{font-size:13px;line-height:1.55;color:#d6e0f8;margin-top:6px}
-.when{margin-top:8px;padding-top:8px;border-top:1px dashed rgba(255,255,255,.1);font-size:12.5px;line-height:1.55}
-.when b{color:var(--good)}
-.when.avoid b{color:var(--danger)}
-.when.up b{color:var(--accent)}
-.unite{padding:13px;border-radius:16px;background:linear-gradient(135deg,rgba(139,123,255,.18),rgba(255,212,95,.08));border:1px solid rgba(139,123,255,.28)}
-.buildbox{margin-top:10px;padding:12px 14px;background:linear-gradient(90deg,rgba(139,123,255,.14),rgba(83,214,255,.09));border:1px solid rgba(139,123,255,.26);border-radius:14px}
-.build-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#b7c6f1;font-weight:900}
-.build-value{font-weight:900;margin-top:4px;line-height:1.4}
+.slot-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:2px 0 4px}
+.slot-h .t{font-family:var(--display);font-weight:800;font-size:16px}
+.slot-h .lv{font-size:12px;color:var(--faint);font-weight:700}
+.base-desc{font-size:14px;color:var(--muted);margin:0 0 10px}
+.move{display:block;width:100%;text-align:left;border:1px solid var(--line2);background:var(--surface2);border-radius:14px;padding:13px;margin-top:8px;cursor:pointer}
+.move.sel{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.move .mh{display:flex;align-items:center;gap:8px}
+.move .mn{font-weight:800;font-size:16px}
+.move .lv{font-size:12px;color:var(--faint);font-weight:700}
+.move .pick{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;color:var(--accent)}
+.move .pick.off{color:var(--faint)}
+.move .d{margin:6px 0 0;font-size:15px}
+.pt{display:flex;gap:8px;align-items:flex-start;margin-top:8px;font-size:14px;line-height:1.55}
+.pt .ico{width:18px;height:18px;margin-top:2px}
+.pt.ok .ico{color:var(--good)}
+.pt.no .ico{color:var(--bad)}
+.pt.up .ico{color:var(--accent)}
+details.more{margin-top:6px}
+details.more summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--accent);list-style:none;display:inline-flex;align-items:center;gap:4px;padding:4px 0}
+details.more summary::-webkit-details-marker{display:none}
+details.more[open] summary .ico{transform:rotate(180deg)}
+.unite{border-radius:14px;padding:14px;background:linear-gradient(135deg,rgba(139,123,255,.16),rgba(83,214,255,.06));border:1px solid rgba(139,123,255,.3)}
+.selbuild{margin-top:12px;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+.selbuild b{color:var(--text)}
 
-.build{border:1px solid var(--line);border-radius:16px;padding:13px;background:rgba(4,12,30,.38);margin-top:10px}
-.build.rec{border-color:rgba(255,212,95,.4)}
-.build .bh{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.build .bn{font-weight:900;font-size:15px;line-height:1.3}
-.badge{flex:0 0 auto;font-size:10px;font-weight:900;padding:4px 8px;border-radius:999px;background:var(--gold);color:#201700}
-.build .st{font-size:13px;color:#d6e0f8;line-height:1.5;margin:6px 0 8px}
-.items{display:grid;grid-template-columns:1fr;gap:6px;margin-top:6px}
-.item{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;line-height:1.45;background:#0f1b3b;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
-.item .ic{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:13px;background:rgba(83,214,255,.15)}
-.item.bi .ic{background:rgba(255,212,95,.18)}
-.item b{display:block;font-size:12.5px}
-.steps{margin:6px 0 0;padding-left:0;list-style:none;counter-reset:s}
-.steps li{position:relative;padding:7px 0 7px 34px;font-size:13px;line-height:1.5;counter-increment:s;border-top:1px dashed rgba(255,255,255,.08)}
-.steps li:first-child{border-top:0}
-.steps li::before{content:counter(s);position:absolute;left:0;top:7px;width:24px;height:24px;border-radius:8px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#06112a;font-weight:900;font-size:12px;display:grid;place-items:center}
-.usebtn{margin-top:10px;width:100%;border:1px solid rgba(83,214,255,.4);background:rgba(83,214,255,.1);border-radius:12px;padding:9px;font-weight:800;font-size:13px;cursor:pointer}
-.usebtn.on{background:var(--accent);color:#06112a}
-.sit{display:grid;grid-template-columns:1fr;gap:8px}
-.sit .box{background:rgba(4,12,30,.4);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
-.sit .lbl{font-size:12px;font-weight:900;margin-bottom:4px;display:flex;gap:6px;align-items:center}
-.sit .val{font-size:13.5px;line-height:1.55;color:#e6ecff}
-ul.plain{margin:0;padding-left:18px}
-ul.plain li{margin:7px 0;line-height:1.5;font-size:13.5px}
-.mu{border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:rgba(4,12,30,.38);margin-top:8px}
-.mu .mn{font-weight:900;font-size:14px;display:flex;align-items:center;gap:8px}
-.mu .mn .lk{font-size:11px;font-weight:800;color:var(--accent);cursor:pointer;text-decoration:underline}
-.mu .why{font-size:13px;color:#d6e0f8;margin-top:4px;line-height:1.5}
-.mu .how{font-size:12.5px;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.1);line-height:1.5}
-.mu .how b{color:var(--good)}
-.mu.bad{border-color:rgba(255,118,138,.35)} .mu.good{border-color:rgba(98,230,166,.35)}
-.src{font-size:11px;color:#8698bd;line-height:1.6;margin-top:4px;word-break:break-all}
-.src a{color:#9fdfff}
-.conf{display:inline-block;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:900;margin-left:6px}
-.conf.high{background:rgba(98,230,166,.2);color:var(--good)}.conf.medium{background:rgba(255,177,94,.2);color:var(--warn)}.conf.low{background:rgba(255,118,138,.2);color:var(--danger)}
-.navrow{display:flex;gap:8px;margin-top:4px}
-.navrow .iconbtn{flex:1;justify-content:center}
-footer{margin:22px 0 0;font-size:11px;color:#7f90b6;line-height:1.6;text-align:center}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1a2a5a;border:1px solid var(--line);padding:10px 14px;border-radius:12px;font-size:13px;font-weight:700;z-index:50;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s}
+.build{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+.build:first-of-type{border-top:0;padding-top:0;margin-top:0}
+.build .bh{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.build .bn{font-family:var(--display);font-weight:800;font-size:16px;line-height:1.3}
+.rec{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:800;color:#201700;background:var(--gold);border-radius:999px;padding:3px 9px}
+.build .st{margin:6px 0 10px;font-size:15px;color:var(--muted)}
+.sub-h{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin:12px 0 4px}
+.items .it{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line)}
+.items .it:first-child{border-top:0}
+.items .it .ib{flex:0 0 auto;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:rgba(83,214,255,.12);color:var(--accent)}
+.items .it.bi .ib{background:rgba(255,212,95,.14);color:var(--gold)}
+.items .it b{display:block;font-size:14px}
+.items .it span{font-size:14px;color:var(--muted)}
+.steps{list-style:none;margin:4px 0 0;padding:0;counter-reset:s}
+.steps li{position:relative;padding:7px 0 7px 36px;font-size:15px;counter-increment:s}
+.steps li::before{content:counter(s);position:absolute;left:0;top:7px;width:25px;height:25px;border-radius:8px;background:var(--raise);color:var(--accent);font-weight:800;font-size:13px;display:grid;place-items:center}
+.usebtn{margin-top:12px}
+
+.mu{padding:12px 0;border-top:1px solid var(--line)}
+.mu:first-of-type{border-top:0;padding-top:0}
+.mu .mn{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px}
+.mu .mn img{width:28px;height:40px;border-radius:6px;object-fit:cover}
+.mu .mn .lk{font-size:13px;font-weight:700;color:var(--accent);cursor:pointer;margin-left:auto;display:inline-flex;align-items:center;gap:3px;background:none;border:0;padding:4px}
+.mu .why{font-size:14px;color:var(--muted);margin-top:4px}
+.mu .ic-bad{color:var(--bad)} .mu .ic-good{color:var(--good)}
+.src{font-size:12px;color:var(--faint);word-break:break-word;line-height:1.7}
+.src a{color:var(--muted)}
+.conf{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:800;margin-left:6px;vertical-align:middle}
+.conf.high{background:rgba(95,224,160,.16);color:var(--good)}.conf.medium{background:rgba(255,177,94,.16);color:#ffb15e}.conf.low{background:rgba(255,128,148,.16);color:var(--bad)}
+.navrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+
+/* compare */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;margin:4px 0 14px}
+.seg button{border:0;background:transparent;border-radius:10px;padding:9px;font-weight:700;font-size:14px;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button.on{background:var(--raise);color:var(--text)}
+.picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pk{position:relative;border:1px solid var(--line2);background:var(--surface);border-radius:14px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:118px;justify-content:center;cursor:pointer;text-align:center}
+.pk img{width:52px;aspect-ratio:237/342;object-fit:cover;border-radius:8px}
+.pk .n{font-size:13px;font-weight:800;line-height:1.2}
+.pk .sw{position:absolute;top:8px;left:8px;width:10px;height:10px;border-radius:50%}
+.pk .rm{position:absolute;top:4px;right:4px;border:0;background:transparent;color:var(--faint);padding:4px;cursor:pointer}
+.pk.add{border-style:dashed;color:var(--muted);font-weight:700;font-size:13px}
+.plot{width:100%;height:auto;display:block}
+.cmp-table{width:100%;border-collapse:collapse;font-size:14px}
+.cmp-table th,.cmp-table td{padding:10px 6px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+.cmp-table thead th{border-top:0;font-size:13px;color:var(--muted);font-weight:800}
+.cmp-table th[scope=row]{font-weight:700;color:var(--muted);width:30%}
+.cmp-table .sw{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.qbtn{border:0;background:transparent;color:var(--faint);padding:0 2px;cursor:pointer;vertical-align:middle}
+.explain{font-size:13px;color:var(--muted);margin-top:4px;font-weight:500}
+.src-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.03em;padding:1px 7px;border-radius:999px;margin-left:4px;vertical-align:middle}
+.src-badge.resmi{background:rgba(95,224,160,.14);color:var(--good)}
+.src-badge.hitung{background:rgba(83,214,255,.14);color:var(--accent)}
+.src-badge.guide{background:rgba(255,177,94,.14);color:#ffb15e}
+.summary li{margin:6px 0;font-size:15px}
+.warn{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#ffcf9a;background:rgba(255,177,94,.08);border:1px solid rgba(255,177,94,.25);border-radius:12px;padding:10px 12px;margin-top:10px}
+.warn .ico{color:#ffb15e;margin-top:1px}
+
+/* roster table */
+.rlist .rr{display:grid;grid-template-columns:22px 36px minmax(0,1fr) auto 36px;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.rlist .rr:first-child{border-top:0}
+.rlist .rk{font-size:13px;color:var(--faint);font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.rlist img{width:36px;aspect-ratio:237/342;object-fit:cover;border-radius:7px}
+.rlist .nm{font-weight:800;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;cursor:pointer;background:none;border:0;padding:0;text-align:left}
+.rlist .nm small{display:block;font-weight:600;color:var(--muted);font-size:12px}
+.rlist .v{white-space:nowrap;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.rlist .addc{border:1px solid var(--line2);background:var(--surface);border-radius:10px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.rlist .addc.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.bar{display:inline-block;width:64px;height:6px;border-radius:99px;background:var(--raise);overflow:hidden;vertical-align:middle;margin-right:8px}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px}
+
+/* glossary */
+.gl .g{padding:12px 0;border-top:1px solid var(--line)}
+.gl .g:first-child{border-top:0;padding-top:0}
+.gl .g .t{font-weight:800;font-size:16px}
+.gl .g .o{font-size:13px;color:var(--faint);font-weight:700}
+.gl .g .d{font-size:15px;color:var(--muted);margin-top:2px}
+
+/* picker sheet */
+.sheet-bg{position:fixed;inset:0;background:rgba(2,5,15,.6);z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:80vh;overflow:auto;background:var(--surface);border:1px solid var(--line2);border-radius:20px 20px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0 0 10px;font-size:18px}
+.sheet .opts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}
+.sheet .opt{border:1px solid var(--line);background:var(--surface2);border-radius:12px;padding:6px;cursor:pointer;text-align:center;font-size:12px;font-weight:700}
+.sheet .opt img{width:100%;aspect-ratio:237/342;object-fit:cover;border-radius:8px;display:block;margin-bottom:4px}
+.sheet .opt[disabled]{opacity:.35;cursor:default}
+
+footer{margin:26px 0 8px;font-size:12px;color:var(--faint);line-height:1.6;text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--raise);border:1px solid var(--line2);padding:10px 14px;border-radius:12px;font-size:14px;font-weight:700;z-index:70;opacity:0;pointer-events:none;transition:.2s;max-width:90vw}
 .toast.show{opacity:1}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="topbar">
-    <button id="backBtn" class="iconbtn hidden" aria-label="Kembali">← Roster</button>
-    <div class="brand"><span>🎮 UNITE Guide</span><small id="brandSub">Roster lo</small></div>
+  <header class="topbar" id="topbar">
+    <button id="backBtn" class="btn ghost hidden" aria-label="Kembali"><svg class="ico"><use href="#i-back"/></svg></button>
+    <div class="brand"><img id="brandImg" class="hidden" alt=""><span id="brandTitle">UNITE Guide</span><span class="sub" id="brandSub"></span></div>
     <div class="spacer"></div>
-    <button id="installBtn" class="iconbtn hidden">⬇ Install</button>
-  </div>
+    <button id="installBtn" class="btn primary hidden"><svg class="ico sm"><use href="#i-download"/></svg>Install</button>
+  </header>
 
-  <!-- HOME -->
-  <section id="home">
-    <div class="hero">
-      <h1>Cara main tiap Pokémon lo</h1>
-      <p>Pilih Pokémon → lihat skill, kapan ditekan, build & combo, situasi, dan matchup. Angka ⭐ = seberapa mirip feel-nya sama Cinderace (bukan tier list).</p>
-    </div>
-    <div class="toolbar">
-      <input id="search" placeholder="Cari Pokémon… (misal: pika)" autocomplete="off">
-      <div class="chips" id="roleChips"></div>
-      <div class="sortrow">Urutkan: <select id="sort">
-        <option value="sim">Paling mirip Cinderace</option>
-        <option value="name">Nama A–Z</option>
-        <option value="role">Role</option>
-        <option value="diff">Paling gampang dulu</option>
-      </select></div>
-    </div>
-    <div id="grid" class="grid"></div>
-    <div class="legend">⭐ = kemiripan feel dengan Cinderace (0–10). 🔥 = Pokémon utama lo. ⏱ = trial. Semua deskripsi adalah ringkasan praktis berbahasa santai, bukan teks game verbatim.</div>
-  </section>
-
-  <!-- DETAIL -->
-  <section id="detail" class="hidden">
-    <div class="dhead">
-      <img id="dImg" alt="">
-      <div>
-        <div id="dName" class="dname"></div>
-        <div id="dTag" class="tag"></div>
-        <div id="dPills" class="pills"></div>
-        <div class="sim">
-          <div class="sim-row"><span>⭐ Mirip Cinderace</span><span id="dSim"></span></div>
-          <div class="meter"><span id="dSimBar"></span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-pane="main">🎮 Cara main</button>
-      <button class="tab" data-pane="skill">⚔️ Skill</button>
-      <button class="tab" data-pane="build">🧰 Build & Combo</button>
-      <button class="tab" data-pane="sit">🧠 Situasi</button>
-      <button class="tab" data-pane="match">🆚 Matchup</button>
-    </div>
-
-    <div id="pane-main" class="pane active"></div>
-    <div id="pane-skill" class="pane"></div>
-    <div id="pane-build" class="pane"></div>
-    <div id="pane-sit" class="pane"></div>
-    <div id="pane-match" class="pane"></div>
-
-    <div class="navrow">
-      <button id="prevBtn" class="iconbtn">◀ Sebelumnya</button>
-      <button id="nextBtn" class="iconbtn">Berikutnya ▶</button>
-    </div>
-  </section>
-
+  <main id="view"></main>
   <footer id="footer"></footer>
 </div>
-<div id="toast" class="toast"></div>
+
+<nav class="bottomnav" aria-label="Menu utama"><div class="in">
+  <a href="#/" data-nav="roster"><svg class="ico"><use href="#i-grid"/></svg>Roster</a>
+  <a href="#/bandingkan" data-nav="compare"><svg class="ico"><use href="#i-compare"/></svg>Bandingkan</a>
+  <a href="#/kamus" data-nav="kamus"><svg class="ico"><use href="#i-book"/></svg>Kamus</a>
+</div></nav>
+<div id="toast" class="toast" role="status"></div>
+
+<!-- ikon garis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="i-compare" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 4h10a4 4 0 014 4v12H8a4 4 0 01-4-4z"/><path d="M4 16a4 4 0 014-4h10"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 4 5 5.5 5 10a5 5 0 01-10 0c0-2.5 1.5-3.5 2-5 .5 1.5 1.5 2 2 2-1-3 0-5 1-7z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5z"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+  <symbol id="i-vs" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-sword" viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol>
+  <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h11a3 3 0 10-3-3M3 12h16a3 3 0 11-3 3M3 16h8"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4.5a3.5 3.5 0 010 7M21.5 20a6.5 6.5 0 00-4-6"/></symbol>
+  <symbol id="i-run" viewBox="0 0 24 24"><circle cx="14" cy="4.5" r="2"/><path d="M8 21l3-6 3 2v5M6 12l3-4h5l3 4h3M11 15l-1-4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17v.5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
+</svg>
 
 <script src="data.js"></script>
 <script>
 (function(){
-const DATA=window.UNITE_DATA||[];
-const bySlug=Object.fromEntries(DATA.map(p=>[p.slug,p]));
-const byName=Object.fromEntries(DATA.map(p=>[p.name.toLowerCase(),p]));
-const ROLE_COLOR={'Penyerang':'var(--r-penyerang)','Serba-Bisa':'var(--r-serba)','Pelari Cepat':'var(--r-pelari)','Defender':'var(--r-defender)','Suporter':'var(--r-suporter)'};
-const ROLE_ICON={'Penyerang':'🎯','Serba-Bisa':'⚔️','Pelari Cepat':'⚡','Defender':'🛡️','Suporter':'💚'};
-const DIFF_ORDER={'Pemula':0,'Menengah':1,'Ahli':2};
-const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null}};
-const state={
-  role:LS('ug.role')||'all', sort:LS('ug.sort')||'sim', q:'',
-  builds:JSON.parse(LS('ug.builds')||'{}'), tab:'main'
+'use strict';
+const DATA = window.UNITE_DATA || [];
+const GLOSS = window.UNITE_GLOSSARY || [];
+const bySlug = Object.fromEntries(DATA.map(p => [p.slug, p]));
+const byName = Object.fromEntries(DATA.map(p => [p.name.toLowerCase(), p]));
+const ROLES = ['Penyerang','Serba-Bisa','Pelari Cepat','Defender','Suporter'];
+const ROLE_COLOR = {'Penyerang':'var(--r-penyerang)','Serba-Bisa':'var(--r-serba)','Pelari Cepat':'var(--r-pelari)','Defender':'var(--r-defender)','Suporter':'var(--r-suporter)'};
+const DIFF = {'Pemula':'Mudah','Menengah':'Sedang','Ahli':'Sulit'};
+const DIFF_N = {'Pemula':1,'Menengah':2,'Ahli':3};
+const RANGE = {'Melee':'Jarak dekat','Ranged':'Jarak jauh'};
+const DMG = {'Physical':'Fisik','Special':'Khusus'};
+const SLOT_COLORS = ['var(--c1)','var(--c2)','var(--c3)'];
+const RATINGS = [
+  {k:'offense', n:'Serangan', ic:'i-sword', ex:'Seberapa besar damage yang bisa dia berikan.'},
+  {k:'endurance', n:'Ketahanan', ic:'i-shield', ex:'Seberapa lama dia bertahan sebelum kalah.'},
+  {k:'mobility', n:'Kelincahan', ic:'i-wind', ex:'Seberapa cepat dia bergerak, mengejar, dan kabur.'},
+  {k:'scoring', n:'Cetak Gol', ic:'i-target', ex:'Seberapa jago dia memasukkan poin ke goal lawan.'},
+  {k:'support', n:'Dukungan Tim', ic:'i-users', ex:'Seberapa banyak dia membantu teman: memulihkan, melindungi, menghambat lawan.'}
+];
+const LS = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } };
+const LSJ = (k, d) => { try { return JSON.parse(LS(k) || 'null') || d; } catch (e) { return d; } };
+const state = {
+  role: LS('ug.role') || 'all', sort: LS('ug.sort') || 'sim', q: '',
+  builds: LSJ('ug.builds', {}), tab: 'main',
+  cmp: LSJ('ug.cmp', ['cinderace','greninja','zeraora']).filter(s => bySlug[s]),
+  cmpMode: LS('ug.cmpMode') || 'side', aspect: LS('ug.aspect') || 'offense', trole: 'all', explain: {}
 };
-const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const $=id=>document.getElementById(id);
-function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2200);}
-
-/* ---------- HOME ---------- */
-const ROLES=['all','Penyerang','Serba-Bisa','Pelari Cepat','Defender','Suporter'];
-function renderChips(){
-  $('roleChips').innerHTML=ROLES.map(r=>`<button class="chip ${state.role===r?'active':''}" data-r="${r}">${r==='all'?'Semua':ROLE_ICON[r]+' '+r}</button>`).join('');
-  $('roleChips').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{state.role=b.dataset.r;LS('ug.role',state.role);renderChips();renderGrid();});
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const $ = id => document.getElementById(id);
+const ic = (id, cls) => `<svg class="ico ${cls||''}" aria-hidden="true"><use href="#${id}"/></svg>`;
+const fmt = v => String(v).replace('.', ',');
+function toast(m){ const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2400); }
+let starSeq = 0;
+function stars(v, color){
+  const col = color || 'var(--gold)';
+  let out = '<span class="stars" role="img" aria-label="' + fmt(v) + ' dari 5 bintang">';
+  for (let i = 0; i < 5; i++) {
+    const f = Math.max(0, Math.min(1, v - i)); const id = 'sc' + (++starSeq);
+    out += `<svg viewBox="0 0 24 24" aria-hidden="true"><defs><clipPath id="${id}"><rect x="0" y="0" width="${24*f}" height="24"/></clipPath></defs><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1.6" stroke-linejoin="round"/><path clip-path="url(#${id})" d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="${col}"/></svg>`;
+  }
+  return out + '</span>';
 }
+function rolePill(p){ return `<span class="pill role" style="background:${ROLE_COLOR[p.role]}">${esc(p.role)}</span>`; }
+
+/* ================= ROSTER ================= */
 function filtered(){
-  const q=state.q.trim().toLowerCase();
-  let arr=DATA.filter(p=>(state.role==='all'||p.role===state.role)&&(!q||p.name.toLowerCase().includes(q)||p.slug.includes(q)));
-  const s=state.sort;
-  arr.sort((a,b)=>{
-    if(s==='sim')return b.cinderace.similarity-a.cinderace.similarity||a.name.localeCompare(b.name);
-    if(s==='name')return a.name.localeCompare(b.name);
-    if(s==='role')return ROLES.indexOf(a.role)-ROLES.indexOf(b.role)||b.cinderace.similarity-a.cinderace.similarity;
-    if(s==='diff')return (DIFF_ORDER[a.difficulty]??1)-(DIFF_ORDER[b.difficulty]??1)||b.cinderace.similarity-a.cinderace.similarity;
+  const q = state.q.trim().toLowerCase();
+  const arr = DATA.filter(p => (state.role === 'all' || p.role === state.role) && (!q || p.name.toLowerCase().includes(q)));
+  const s = state.sort; const r = RATINGS.find(x => x.k === s);
+  arr.sort((a, b) => {
+    if (r) return b.ratings[s] - a.ratings[s] || a.name.localeCompare(b.name);
+    if (s === 'sim') return b.cinderace.similarity - a.cinderace.similarity || a.name.localeCompare(b.name);
+    if (s === 'name') return a.name.localeCompare(b.name);
+    if (s === 'diff') return DIFF_N[a.difficulty] - DIFF_N[b.difficulty] || a.name.localeCompare(b.name);
     return 0;
   });
   return arr;
 }
+function viewRoster(){
+  $('view').innerHTML = `
+    <h1 class="page-title">Cara main tiap Pokémon kamu</h1>
+    <p class="lead">Ketuk Pokémon untuk melihat jurus, kapan dipakai, build, dan lawan yang perlu diwaspadai.</p>
+    <div class="toolbar">
+      <div class="searchwrap">${ic('i-search')}<input id="search" class="field" placeholder="Cari Pokémon…" autocomplete="off" aria-label="Cari Pokémon" value="${esc(state.q)}"></div>
+      <div class="chips" id="roleChips"></div>
+      <div class="sortrow"><label for="sort">Urutkan:</label><select id="sort" class="sel">
+        <option value="sim">Paling mirip Cinderace</option>
+        <option value="diff">Paling mudah dulu</option>
+        <option value="name">Nama A–Z</option>
+        ${RATINGS.map(r => `<option value="${r.k}">${r.n} tertinggi</option>`).join('')}
+      </select></div>
+    </div>
+    <div id="grid" class="grid"></div>
+    <p class="small" style="margin-top:14px">${ic('i-flame','sm')} Angka api = seberapa mirip cara mainnya dengan Cinderace (0–10). Ini bukan peringkat kekuatan.</p>`;
+  const rc = $('roleChips');
+  rc.innerHTML = ['all', ...ROLES].map(r => `<button class="chip ${state.role === r ? 'on' : ''}" data-r="${r}">${r === 'all' ? 'Semua' : `<span class="dot" style="background:${ROLE_COLOR[r]}"></span>${r}`}</button>`).join('');
+  rc.querySelectorAll('.chip').forEach(b => b.onclick = () => { state.role = b.dataset.r; LS('ug.role', state.role); viewRoster(); });
+  $('search').oninput = e => { state.q = e.target.value; renderGrid(); };
+  $('sort').value = state.sort; $('sort').onchange = e => { state.sort = e.target.value; LS('ug.sort', state.sort); renderGrid(); };
+  renderGrid();
+}
 function renderGrid(){
-  const arr=filtered();
-  if(!arr.length){$('grid').innerHTML='<div class="empty" style="grid-column:1/-1">Nggak ada yang cocok.</div>';return;}
-  $('grid').innerHTML=arr.map(p=>`<button class="pcard" data-slug="${p.slug}">
-    <img src="${p.image}" alt="${esc(p.name)}" loading="lazy">
-    <span class="sim">⭐ ${p.cinderace.similarity}</span>
-    ${p.slug==='cinderace'?'<span class="main">🔥 MAIN</span>':p.status==='Trial'?'<span class="trial">⏱ Trial</span>':''}
-    <div class="rolebar" style="background:${ROLE_COLOR[p.role]||'#888'}"></div>
-    <div class="nm">${esc(p.name)}</div>
-    <div class="rl">${ROLE_ICON[p.role]||''} ${esc(p.role)} · ${esc(p.difficulty)}</div>
+  const arr = filtered(); const g = $('grid');
+  if (!arr.length) { g.innerHTML = '<div class="empty" style="grid-column:1/-1">Tidak ada Pokémon yang cocok.</div>'; return; }
+  g.innerHTML = arr.map(p => `<button class="pcard" data-slug="${p.slug}" aria-label="${esc(p.name)}">
+    <img src="${p.image}" alt="" loading="lazy">
+    <span class="tag">${ic('i-flame')}${p.cinderace.similarity}</span>
+    ${p.slug === 'cinderace' ? '<span class="badge">Utama</span>' : p.status === 'Trial' ? '<span class="badge trial">Trial</span>' : ''}
+    <div class="meta"><span class="rd" style="background:${ROLE_COLOR[p.role]}"></span>${esc(p.role)} · ${DIFF[p.difficulty]}</div>
   </button>`).join('');
-  $('grid').querySelectorAll('.pcard').forEach(b=>b.onclick=()=>go(b.dataset.slug));
+  g.querySelectorAll('.pcard').forEach(b => b.onclick = () => go('#/p/' + b.dataset.slug));
 }
 
-/* ---------- DETAIL ---------- */
-function linkName(name){
-  const p=byName[String(name).toLowerCase()];
-  return p?`<span class="lk" data-go="${p.slug}">${esc(name)} ↗</span>`:esc(name);
+/* ================= DETAIL ================= */
+function ratingCard(p){
+  return `<div class="card"><h2>${ic('i-star')}Rating resmi</h2>
+    ${RATINGS.map(r => `<div class="rating-row"><div class="nm">${ic(r.ic)}${r.n}</div>${stars(p.ratings[r.k])}<div class="num">${fmt(p.ratings[r.k])}</div></div>`).join('')}
+    ${p.ratingsNote ? `<div class="warn">${ic('i-alert','sm')}<span>${esc(p.ratingsNote)}</span></div>` : ''}
+    <a class="btn block" style="margin-top:12px" href="#/bandingkan" data-cmpwith="${p.slug}">${ic('i-compare','sm')}Bandingkan ${esc(p.name)}</a>
+  </div>`;
 }
-function kv(lbl,val){return `<div class="box"><div class="lbl">${lbl}</div><div class="val">${esc(val)}</div></div>`;}
-function renderMain(p){
-  const c=p.cinderace;
-  $('pane-main').innerHTML=`
-  <div class="card"><h2>🎮 Identitas & cara kerja</h2>
-    <div class="kv">
-      ${kv('Passive — '+esc(p.passive.name),p.passive.desc)}
-      ${kv('Basic attack',p.basicAttack)}
-      ${kv('Evolusi',p.evolutions)}
-      ${kv('Lane terbaik',(p.lanes||[]).join(' / ')+'. '+p.laneNote)}
-    </div></div>
-  <div class="card"><h2>⏱️ Early game & power spike</h2>
-    <div class="kv">
-      ${kv('Menit 0–2',p.earlyGame)}
-      ${kv('Kapan jadi kuat',p.powerSpike)}
-    </div></div>
-  <div class="card"><h2>🔥 ${p.slug==='cinderace'?'Tips lanjutan buat lo':'Kalau lo biasa Cinderace…'}</h2>
-    <div class="callout">${esc(c.note)}</div></div>`;
+function rowsHtml(list){ return `<div class="rows">${list.filter(x => x[1]).map(([l, v, i]) => `<div class="row"><div class="lbl">${i ? ic(i,'sm') : ''}${l}</div><div class="val">${esc(v)}</div></div>`).join('')}</div>`; }
+function paneMain(p){
+  const s = p.situations || {};
+  return `
+  ${ratingCard(p)}
+  <div class="card"><h2>${ic('i-info')}Cara kerjanya</h2>${rowsHtml([
+    ['Kemampuan pasif · ' + p.passive.name, p.passive.desc],
+    ['Serangan biasa', p.basicAttack],
+    ['Evolusi', p.evolutions],
+    ['Jalur terbaik · ' + (p.lanes || []).join(', '), p.laneNote]
+  ])}</div>
+  <div class="card"><h2>${ic('i-clock')}Awal permainan & titik kuat</h2>${rowsHtml([
+    ['Menit 0–2', p.earlyGame], ['Kapan jadi kuat', p.powerSpike]
+  ])}</div>
+  <div class="card"><h2>${ic('i-flame')}${p.slug === 'cinderace' ? 'Tips lanjutan' : 'Kalau kamu biasa main Cinderace'}</h2><div class="callout">${esc(p.cinderace.note)}</div></div>
+  <div class="card sit"><h2>${ic('i-flag')}Yang ditekan di tiap situasi</h2>${rowsHtml([
+    ['Saat menyerang dadakan atau dikeroyok', s.gank, 'i-sword'], ['Saat harus kabur', s.escape, 'i-run'],
+    ['Saat rebutan target besar', s.objective, 'i-target'], ['Duel satu lawan satu', s.duel, 'i-vs'],
+    ['Perang tim 5 lawan 5', s.teamfight, 'i-users']
+  ])}</div>
+  <div class="card"><h2>${ic('i-alert')}Kesalahan yang sering terjadi</h2>
+    ${(p.mistakes || []).map(m => `<div class="pt no">${ic('i-x')}<span>${esc(m)}</span></div>`).join('')}</div>`;
 }
-function moveBtn(p,slot,m){
-  const sel=state.builds[p.slug]?.[slot]===m.name;
-  return `<button class="move ${sel?'selected':''}" data-slot="${slot}" data-move="${esc(m.name)}">
-    <div class="move-name"><span>${esc(m.name)} <span class="lv">Lv${m.level}${m.upgradeLevel?' → +Lv'+m.upgradeLevel:''}</span></span><span class="check">✓ dipilih</span></div>
-    <div class="desc">${esc(m.desc)}</div>
-    <div class="when"><b>Kapan tekan:</b> ${esc(m.when)}</div>
-    ${m.avoid?`<div class="when avoid"><b>Jangan:</b> ${esc(m.avoid)}</div>`:''}
-    ${m.upgradeNote?`<div class="when up"><b>Upgrade:</b> ${esc(m.upgradeNote)}</div>`:''}
+function moveBtn(p, slot, m){
+  const sel = state.builds[p.slug]?.[slot] === m.name;
+  return `<button class="move ${sel ? 'sel' : ''}" data-slot="${slot}" data-move="${esc(m.name)}" aria-pressed="${sel}">
+    <div class="mh"><span class="mn">${esc(m.name)}</span><span class="lv">Lv${m.level}${m.upgradeLevel ? ' · naik di Lv' + m.upgradeLevel : ''}</span>
+      <span class="pick ${sel ? '' : 'off'}">${sel ? ic('i-check','sm') + 'Dipakai' : 'Pilih'}</span></div>
+    <p class="d">${esc(m.desc)}</p>
+    <div class="pt ok">${ic('i-check')}<span><b>Kapan dipakai:</b> ${esc(m.when)}</span></div>
+    ${(m.avoid || m.upgradeNote) ? `<details class="more" onclick="event.stopPropagation()"><summary>Selengkapnya ${ic('i-down','sm')}</summary>
+      ${m.avoid ? `<div class="pt no">${ic('i-x')}<span><b>Hindari:</b> ${esc(m.avoid)}</span></div>` : ''}
+      ${m.upgradeNote ? `<div class="pt up">${ic('i-up')}<span><b>Setelah naik level:</b> ${esc(m.upgradeNote)}</span></div>` : ''}
+    </details>` : ''}
   </button>`;
 }
-function slotHtml(p,key,label){
-  const s=p[key];
-  return `<div class="slot"><div class="slot-title">${label}</div>
-    <div class="base">${esc(s.base.name)}<small>Lv${s.base.level} · skill awal</small></div>
-    <div class="base-desc">${esc(s.base.desc)}</div>
-    ${s.choices.map(m=>moveBtn(p,key,m)).join('')}
+function slotHtml(p, key, label){
+  const s = p[key];
+  return `<div class="card"><div class="kicker">${label}</div>
+    <div class="slot-h"><span class="t">${esc(s.base.name)}</span><span class="lv">jurus awal · Lv${s.base.level}</span></div>
+    <p class="base-desc">${esc(s.base.desc)}</p>
+    <div class="small">Nanti berubah jadi salah satu jurus ini. Ketuk untuk menandai pilihanmu:</div>
+    ${s.choices.map(m => moveBtn(p, key, m)).join('')}
   </div>`;
 }
-function currentBuildText(p){
-  const b=state.builds[p.slug]||{};
-  return `${b.slot1||'—'} + ${b.slot2||'—'}`;
-}
-function renderSkill(p){
-  $('pane-skill').innerHTML=`
-  <div class="card"><h2>⚔️ Skill & cabang move</h2>
-    <div class="small">Tap move buat nandain build yang lo pakai; pilihan tersimpan di HP lo.</div>
-    ${slotHtml(p,'slot1','Skill slot 1')}
-    ${slotHtml(p,'slot2','Skill slot 2')}
-    <div class="buildbox"><div class="build-title">Build yang lo pilih</div><div class="build-value" id="selBuild">${esc(currentBuildText(p))}</div></div>
-  </div>
-  <div class="card"><h2>✨ Unite Move</h2>
-    <div class="unite">
-      <div class="move-name"><span>${esc(p.unite.name)} <span class="lv">Lv${p.unite.level}</span></span></div>
-      <div class="desc">${esc(p.unite.desc)}</div>
-      <div class="when"><b>Kapan pakai:</b> ${esc(p.unite.when)}</div>
-      ${p.unite.avoid?`<div class="when avoid"><b>Jangan:</b> ${esc(p.unite.avoid)}</div>`:''}
-    </div></div>`;
-  $('pane-skill').querySelectorAll('.move').forEach(btn=>btn.onclick=()=>{
-    state.builds[p.slug]=state.builds[p.slug]||{};
-    state.builds[p.slug][btn.dataset.slot]=btn.dataset.move;
-    LS('ug.builds',JSON.stringify(state.builds));
-    renderSkill(p);renderBuild(p);
-  });
-}
-function buildMatches(p,b){
-  const cur=state.builds[p.slug]||{};
-  const names=b.moves.map(x=>x.split(' (')[0]);
-  const c1=(cur.slot1||'').split(' (')[0],c2=(cur.slot2||'').split(' (')[0];
-  return names.includes(c1)&&names.includes(c2)&&c1&&c2;
-}
-function renderBuild(p){
-  $('pane-build').innerHTML=`<div class="card"><h2>🧰 Build, item & combo</h2>
-    <div class="small">Build ⭐ = rekomendasi utama. Tap "Pakai build ini" buat set move di tab Skill.</div>
-    ${p.builds.map((b,i)=>`<div class="build ${b.recommended?'rec':''}">
-      <div class="bh"><div class="bn">${esc(b.name)}</div>${b.recommended?'<span class="badge">⭐ Rekomendasi</span>':''}</div>
-      <div class="st">${esc(b.style)}</div>
-      <h3>Held items</h3>
-      <div class="items">${b.heldItems.map(h=>`<div class="item"><div class="ic">🎒</div><div><b>${esc(h.name)}</b>${esc(h.why)}</div></div>`).join('')}
-        <div class="item bi"><div class="ic">🧪</div><div><b>Battle item: ${esc(b.battleItem.name)}</b>${esc(b.battleItem.why)}</div></div></div>
-      <h3>Urutan combo</h3>
-      <ol class="steps">${b.combo.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>
-      ${b.comboNote?`<div class="small" style="margin-top:6px">💡 ${esc(b.comboNote)}</div>`:''}
-      <button class="usebtn ${buildMatches(p,b)?'on':''}" data-i="${i}">${buildMatches(p,b)?'✓ Build ini aktif':'Pakai build ini'}</button>
-    </div>`).join('')}
+function paneSkill(p){
+  const b = state.builds[p.slug] || {};
+  return `${slotHtml(p, 'slot1', 'Jurus 1')}${slotHtml(p, 'slot2', 'Jurus 2')}
+  <div class="card"><div class="kicker">Jurus pamungkas (Unite Move)</div>
+    <div class="unite"><div class="slot-h"><span class="t">${esc(p.unite.name)}</span><span class="lv">Lv${p.unite.level}</span></div>
+      <p class="d" style="margin:4px 0 0">${esc(p.unite.desc)}</p>
+      <div class="pt ok">${ic('i-check')}<span><b>Kapan dipakai:</b> ${esc(p.unite.when)}</span></div>
+      ${p.unite.avoid ? `<div class="pt no">${ic('i-x')}<span><b>Hindari:</b> ${esc(p.unite.avoid)}</span></div>` : ''}
+    </div>
+    <div class="selbuild">${ic('i-bag','sm')}Pilihanmu: <b>${esc(b.slot1 || '—')} + ${esc(b.slot2 || '—')}</b></div>
   </div>`;
-  $('pane-build').querySelectorAll('.usebtn').forEach(btn=>btn.onclick=()=>{
-    const b=p.builds[+btn.dataset.i];
-    const s1=p.slot1.choices.find(c=>b.moves.some(m=>m.split(' (')[0]===c.name.split(' (')[0]));
-    const s2=p.slot2.choices.find(c=>b.moves.some(m=>m.split(' (')[0]===c.name.split(' (')[0]));
-    state.builds[p.slug]={slot1:s1?s1.name:'',slot2:s2?s2.name:''};
-    LS('ug.builds',JSON.stringify(state.builds));
-    renderSkill(p);renderBuild(p);toast('Build diset: '+b.moves.join(' + '));
+}
+function buildActive(p, b){
+  const cur = state.builds[p.slug] || {}; const base = x => (x || '').split(' (')[0];
+  const names = b.moves.map(base);
+  return !!(cur.slot1 && cur.slot2 && names.includes(base(cur.slot1)) && names.includes(base(cur.slot2)));
+}
+function paneBuild(p){
+  return `<div class="card"><h2>${ic('i-bag')}Build, item & urutan combo</h2>
+    ${p.builds.map((b, i) => `<div class="build">
+      <div class="bh"><div class="bn">${esc(b.name)}</div>${b.recommended ? `<span class="rec">${ic('i-star','sm')}Disarankan</span>` : ''}</div>
+      <p class="st">${esc(b.style)}</p>
+      <div class="sub-h">Item bawaan (held items)</div>
+      <div class="items">${b.heldItems.map(h => `<div class="it"><div class="ib">${ic('i-bag','sm')}</div><div><b>${esc(h.name)}</b><span>${esc(h.why)}</span></div></div>`).join('')}
+        <div class="it bi"><div class="ib">${ic('i-bolt','sm')}</div><div><b>Item tempur: ${esc(b.battleItem.name)}</b><span>${esc(b.battleItem.why)}</span></div></div></div>
+      <div class="sub-h">Urutan combo</div>
+      <ol class="steps">${b.combo.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
+      ${b.comboNote ? `<p class="small">${esc(b.comboNote)}</p>` : ''}
+      <button class="btn block usebtn ${buildActive(p, b) ? 'primary' : ''}" data-i="${i}">${buildActive(p, b) ? ic('i-check','sm') + 'Build ini sedang dipakai' : 'Pakai build ini'}</button>
+    </div>`).join('')}</div>`;
+}
+function linkName(name){
+  const p = byName[String(name).toLowerCase()];
+  return p ? `<img src="${p.image}" alt="">${esc(name)}<button class="lk" data-go="${p.slug}">Lihat ${ic('i-back','sm')}</button>` : esc(name);
+}
+function paneLawan(p){
+  const c = p.counters || {hardFor: [], goodAgainst: []};
+  return `<div class="card"><h2>${ic('i-alert')}Lawan yang menyulitkan</h2>
+    ${c.hardFor.map(m => `<div class="mu"><div class="mn"><span class="ic-bad">${ic('i-x','sm')}</span>${linkName(m.name)}</div><div class="why">${esc(m.why)}</div>${m.how ? `<div class="pt ok">${ic('i-check')}<span><b>Cara mengatasi:</b> ${esc(m.how)}</span></div>` : ''}</div>`).join('')}</div>
+  <div class="card"><h2>${ic('i-check')}Lawan yang mudah dihadapi</h2>
+    ${c.goodAgainst.map(m => `<div class="mu"><div class="mn"><span class="ic-good">${ic('i-check','sm')}</span>${linkName(m.name)}</div><div class="why">${esc(m.why)}</div></div>`).join('')}</div>
+  <div class="card"><h2>${ic('i-book')}Sumber & catatan <span class="conf ${esc(p.confidence)}">keyakinan ${p.confidence === 'high' ? 'tinggi' : p.confidence === 'medium' ? 'sedang' : 'rendah'}</span></h2>
+    ${p.notes ? `<p class="small">${esc(p.notes)}</p>` : ''}
+    <div class="src">${(p.sources || []).map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\/(www\.)?/, ''))}</a>`).join('<br>')}</div></div>`;
+}
+function viewDetail(p, tab){
+  state.tab = ['main','skill','build','lawan'].includes(tab) ? tab : (state.tab || 'main');
+  $('view').innerHTML = `
+    <div class="dhead"><img src="${p.image}" alt="${esc(p.name)}">
+      <div><h1 class="dname">${esc(p.name)}</h1><p class="dtag">${esc(p.tagline)}</p>
+        <div class="dpills">${rolePill(p)}<span class="pill">${RANGE[p.range] || esc(p.range)}</span><span class="pill">${DMG[p.damage] || esc(p.damage)}</span><span class="pill">${DIFF[p.difficulty]}</span>
+        <span class="fireTag">${ic('i-flame')}Mirip Cinderace ${p.cinderace.similarity}/10</span></div></div></div>
+    <div class="tabs-wrap"><div class="tabs" role="tablist">
+      ${[['main','Main','i-play'],['skill','Jurus','i-bolt'],['build','Build','i-bag'],['lawan','Lawan','i-vs']].map(([k, l, i]) => `<button class="tab ${state.tab === k ? 'on' : ''}" role="tab" aria-selected="${state.tab === k}" data-t="${k}">${ic(i)}${l}</button>`).join('')}
+    </div></div>
+    <div class="pane" id="pane-main"></div><div class="pane" id="pane-skill"></div><div class="pane" id="pane-build"></div><div class="pane" id="pane-lawan"></div>
+    <div class="navrow"><button class="btn" id="prevBtn"></button><button class="btn" id="nextBtn"></button></div>`;
+  const draw = () => {
+    $('pane-main').innerHTML = paneMain(p); $('pane-skill').innerHTML = paneSkill(p);
+    $('pane-build').innerHTML = paneBuild(p); $('pane-lawan').innerHTML = paneLawan(p);
+    document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === 'pane-' + state.tab));
+    document.querySelectorAll('#pane-skill .move').forEach(btn => btn.onclick = () => {
+      state.builds[p.slug] = state.builds[p.slug] || {}; state.builds[p.slug][btn.dataset.slot] = btn.dataset.move;
+      LS('ug.builds', JSON.stringify(state.builds)); draw();
+    });
+    document.querySelectorAll('#pane-build .usebtn').forEach(btn => btn.onclick = () => {
+      const b = p.builds[+btn.dataset.i]; const base = x => x.split(' (')[0];
+      const s1 = p.slot1.choices.find(c => b.moves.some(m => base(m) === base(c.name)));
+      const s2 = p.slot2.choices.find(c => b.moves.some(m => base(m) === base(c.name)));
+      state.builds[p.slug] = {slot1: s1 ? s1.name : '', slot2: s2 ? s2.name : ''};
+      LS('ug.builds', JSON.stringify(state.builds)); draw(); toast('Build dipasang: ' + b.moves.join(' + '));
+    });
+    document.querySelectorAll('[data-go]').forEach(el => el.onclick = e => { e.stopPropagation(); go('#/p/' + el.dataset.go); });
+    document.querySelectorAll('[data-cmpwith]').forEach(el => el.onclick = e => {
+      e.preventDefault(); const s = el.dataset.cmpwith;
+      state.cmp = [s, ...state.cmp.filter(x => x !== s)].slice(0, 3); if (state.cmp.length < 2) state.cmp.push(s === 'cinderace' ? 'greninja' : 'cinderace');
+      LS('ug.cmp', JSON.stringify(state.cmp)); state.cmpMode = 'side'; go('#/bandingkan');
+    });
+  };
+  draw();
+  document.querySelectorAll('.tab').forEach(b => b.onclick = () => {
+    state.tab = b.dataset.t; document.querySelectorAll('.tab').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-selected', x === b); });
+    document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === 'pane-' + state.tab));
+    history.replaceState(null, '', '#/p/' + p.slug + '/' + state.tab);
+    const tw = document.querySelector('.tabs-wrap'); if (tw && window.scrollY > tw.offsetTop) window.scrollTo({top: tw.offsetTop - 56});
   });
+  const list = filtered(); let i = list.findIndex(x => x.slug === p.slug); const L = i < 0 ? DATA : list; if (i < 0) i = DATA.indexOf(p);
+  const prev = L[(i - 1 + L.length) % L.length], next = L[(i + 1) % L.length];
+  $('prevBtn').innerHTML = ic('i-back','sm') + esc(prev.name); $('nextBtn').innerHTML = esc(next.name) + `<svg class="ico sm" style="transform:rotate(180deg)"><use href="#i-back"/></svg>`;
+  $('prevBtn').onclick = () => go('#/p/' + prev.slug + '/' + state.tab); $('nextBtn').onclick = () => go('#/p/' + next.slug + '/' + state.tab);
 }
-function renderSit(p){
-  const s=p.situations||{};
-  const rows=[['🗡️ Gank / dikeroyok',s.gank],['🏃 Kabur / survive',s.escape],['🐉 Objective (Rayquaza, Regieleki, dll)',s.objective],['🤜 Duel 1v1',s.duel],['👥 Teamfight 5v5',s.teamfight]];
-  $('pane-sit').innerHTML=`<div class="card"><h2>🧠 Apa yang ditekan di situasi ini</h2>
-    <div class="sit">${rows.filter(r=>r[1]).map(r=>`<div class="box"><div class="lbl">${r[0]}</div><div class="val">${esc(r[1])}</div></div>`).join('')}</div></div>
-  <div class="card"><h2>🚫 Kesalahan umum</h2><ul class="plain">${(p.mistakes||[]).map(m=>`<li>${esc(m)}</li>`).join('')}</ul></div>`;
-}
-function renderMatch(p){
-  const c=p.counters||{hardFor:[],goodAgainst:[]};
-  $('pane-match').innerHTML=`<div class="card"><h2>😬 Bikin susah</h2>
-    ${c.hardFor.map(m=>`<div class="mu bad"><div class="mn">${linkName(m.name)}</div><div class="why">${esc(m.why)}</div>${m.how?`<div class="how"><b>Cara ngatasin:</b> ${esc(m.how)}</div>`:''}</div>`).join('')}</div>
-  <div class="card"><h2>😎 Enak dilawan</h2>
-    ${c.goodAgainst.map(m=>`<div class="mu good"><div class="mn">${linkName(m.name)}</div><div class="why">${esc(m.why)}</div></div>`).join('')}</div>
-  <div class="card"><h2>📚 Sumber & catatan <span class="conf ${esc(p.confidence)}">${esc(p.confidence)}</span></h2>
-    ${p.notes?`<div class="small" style="margin-bottom:8px">${esc(p.notes)}</div>`:''}
-    <div class="src">${(p.sources||[]).map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//,''))}</a>`).join('<br>')}</div></div>`;
-  $('pane-match').querySelectorAll('[data-go]').forEach(el=>el.onclick=()=>go(el.dataset.go));
-}
-function renderDetail(p){
-  $('dImg').src=p.image;$('dImg').alt=p.name;
-  $('dName').textContent=p.name;$('dTag').textContent=p.tagline;
-  $('dPills').innerHTML=`<span class="pill role" style="background:${ROLE_COLOR[p.role]}">${ROLE_ICON[p.role]} ${esc(p.role)}</span>
-    <span class="pill">${esc(p.damage)}</span><span class="pill">${esc(p.range)}</span><span class="pill">Kesulitan: ${esc(p.difficulty)}</span>
-    ${(p.lanes||[]).map(l=>`<span class="pill">📍 ${esc(l)}</span>`).join('')}
-    ${p.status==='Trial'?'<span class="pill" style="background:var(--warn);color:#201700">⏱ Trial</span>':''}`;
-  $('dSim').textContent=p.cinderace.similarity+'/10';$('dSimBar').style.width=(p.cinderace.similarity*10)+'%';
-  renderMain(p);renderSkill(p);renderBuild(p);renderSit(p);renderMatch(p);
-  setTab(state.tab);
-  $('brandSub').textContent=p.name;
-  const list=filtered(), i=list.findIndex(x=>x.slug===p.slug);
-  const prev=list[(i-1+list.length)%list.length], next=list[(i+1)%list.length];
-  $('prevBtn').textContent='◀ '+(prev?prev.name:'');$('nextBtn').textContent=(next?next.name:'')+' ▶';
-  $('prevBtn').onclick=()=>go(prev.slug);$('nextBtn').onclick=()=>go(next.slug);
-}
-function setTab(t){
-  state.tab=t;
-  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.pane===t));
-  document.querySelectorAll('.pane').forEach(b=>b.classList.toggle('active',b.id==='pane-'+t));
-}
-$('tabs').querySelectorAll('.tab').forEach(b=>b.onclick=()=>{setTab(b.dataset.pane);});
 
-/* ---------- ROUTING ---------- */
-function go(slug){location.hash='#/p/'+slug;}
-function route(){
-  const m=location.hash.match(/^#\/p\/([a-z0-9-]+)/);
-  const p=m&&bySlug[m[1]];
-  if(p){
-    $('home').classList.add('hidden');$('detail').classList.remove('hidden');$('backBtn').classList.remove('hidden');
-    renderDetail(p);LS('ug.last',p.slug);window.scrollTo({top:0});
-  }else{
-    $('detail').classList.add('hidden');$('home').classList.remove('hidden');$('backBtn').classList.add('hidden');
-    $('brandSub').textContent='Roster lo';renderGrid();
-  }
+/* ================= COMPARE ================= */
+const ASPECTS = [
+  {k:'role', n:'Peran', src:'resmi', ex:'Tugas utamanya di tim.', v:p => p.role},
+  {k:'range', n:'Jarak & jenis serangan', src:'resmi', ex:'Menyerang dari dekat atau jauh, dan jenis item yang cocok (fisik pakai Attack, khusus pakai Sp. Atk).', v:p => `${RANGE[p.compare.rangeOfficial || p.range] || p.range} · ${DMG[p.damage]}`},
+  {k:'diff', n:'Tingkat kesulitan', src:'resmi', ex:'Seberapa susah dikuasai pemain baru, menurut situs resmi.', v:p => DIFF[p.difficulty], num:p => DIFF_N[p.difficulty]},
+  {k:'cc', n:'Kontrol lawan', src:'hitung', ex:'Jumlah jurus yang bisa membuat lawan melambat, terlempar, atau diam. Dihitung dari deskripsi jurus di app ini.', v:p => `${p.compare.ccCount} jurus`, sub:p => p.compare.ccMoves.join(', '), num:p => p.compare.ccCount},
+  {k:'sustain', n:'Daya pulih sendiri', src:'hitung', ex:'Jumlah jurus atau pasif yang memulihkan HP atau memberi perisai ke diri sendiri.', v:p => `${p.compare.sustainCount} sumber`, sub:p => p.compare.sustainMoves.join(', '), num:p => p.compare.sustainCount},
+  {k:'phase', n:'Fase terkuat', src:'guide', ex:'Kapan dia paling kuat dalam pertandingan 10 menit. Penilaian dari panduan.', v:p => p.compare.phase, sub:p => p.compare.phaseNote}
+];
+const SRC_LABEL = {resmi:'Resmi', hitung:'Dihitung', guide:'Penilaian guide'};
+function srcBadge(s){ return `<span class="src-badge ${s}">${SRC_LABEL[s]}</span>`; }
+function qBtn(key){ return `<button class="qbtn" data-q="${key}" aria-label="Apa artinya?">${ic('i-info','sm')}</button>`; }
+function explainHtml(key, text){ return state.explain[key] ? `<div class="explain">${esc(text)}</div>` : ''; }
+function similarTo(slug, n){
+  const a = bySlug[slug];
+  return DATA.filter(p => p.slug !== slug).map(p => {
+    let d = 0; RATINGS.forEach(r => { d += (p.ratings[r.k] - a.ratings[r.k]) ** 2; });
+    if ((p.compare.rangeOfficial || p.range) !== (a.compare.rangeOfficial || a.range)) d += 2;
+    return {p, d};
+  }).sort((x, y) => x.d - y.d).slice(0, n).map(x => x.p.slug);
 }
-$('backBtn').onclick=()=>{location.hash='';};
-window.addEventListener('hashchange',route);
-$('search').oninput=e=>{state.q=e.target.value;renderGrid();};
-$('sort').value=state.sort;$('sort').onchange=e=>{state.sort=e.target.value;LS('ug.sort',state.sort);renderGrid();};
-renderChips();
-$('footer').innerHTML=`Data versi ${esc(window.UNITE_VERSION||'')} · ${DATA.length} Pokémon · Nama move/level dicek silang Serebii + Bulbapedia; build & item dari game8/dittobase; sebagian matchup adalah inferensi mekanik (lihat catatan tiap Pokémon). Ringkasan praktis, bukan teks game verbatim.`;
+function dotPlot(ps){
+  const W = 360, left = 116, right = 346, y0 = 22, rowH = 44, H = y0 + RATINGS.length * rowH + 14;
+  const x = v => left + v / 5 * (right - left);
+  let s = `<svg class="plot" viewBox="0 0 ${W} ${H}" role="img" aria-label="Perbandingan rating resmi">`;
+  for (let t = 0; t <= 5; t++) s += `<line x1="${x(t)}" x2="${x(t)}" y1="${y0 - 14}" y2="${H - 22}" stroke="rgba(255,255,255,.07)"/><text x="${x(t)}" y="${H - 6}" text-anchor="middle" fill="#7d8ab0" font-size="12">${t}</text>`;
+  RATINGS.forEach((r, i) => {
+    const y = y0 + i * rowH;
+    s += `<text x="0" y="${y + 5}" fill="#eef2ff" font-size="13" font-weight="600">${r.n}</text><line x1="${left}" x2="${right}" y1="${y}" y2="${y}" stroke="rgba(255,255,255,.10)"/>`;
+    ps.forEach((p, j) => {
+      const off = (j - (ps.length - 1) / 2) * 10;
+      s += `<circle cx="${x(p.ratings[r.k])}" cy="${y + off}" r="6.5" fill="${SLOT_COLORS[j]}" stroke="#0f1733" stroke-width="2"><title>${esc(p.name)} · ${r.n}: ${fmt(p.ratings[r.k])}</title></circle>`;
+    });
+  });
+  return s + '</svg>';
+}
+function summary(ps){
+  const out = []; const a = ps[0];
+  ps.slice(1).forEach(b => {
+    const diffs = RATINGS.map(r => ({r, d: b.ratings[r.k] - a.ratings[r.k]})).filter(x => x.d !== 0).sort((x, y) => Math.abs(y.d) - Math.abs(x.d));
+    if (!diffs.length) { out.push(`${b.name} dan ${a.name} punya rating resmi yang sama persis.`); return; }
+    const up = diffs.filter(x => x.d > 0).slice(0, 2), dn = diffs.filter(x => x.d < 0).slice(0, 2);
+    const part = (arr, word) => arr.map(x => `${word} ${x.r.n.toLowerCase()} (${fmt(b.ratings[x.r.k])} vs ${fmt(a.ratings[x.r.k])})`).join(' dan ');
+    let t = `${b.name} dibanding ${a.name}: `;
+    if (up.length) t += part(up, 'lebih unggul di');
+    if (up.length && dn.length) t += ', tapi ';
+    if (dn.length) t += part(dn, 'kalah di');
+    out.push(t + '.');
+  });
+  const same = ps.every(p => (p.compare.rangeOfficial || p.range) === (a.compare.rangeOfficial || a.range));
+  out.push(same ? `Semuanya menyerang dari ${RANGE[a.compare.rangeOfficial || a.range].toLowerCase()}.` : 'Jarak serangnya berbeda, jadi posisi berdiri di pertarungan juga berbeda.');
+  return out;
+}
+function viewCompare(){
+  const ps = state.cmp.map(s => bySlug[s]).filter(Boolean);
+  $('view').innerHTML = `
+    <h1 class="page-title">Bandingkan Pokémon</h1>
+    <p class="lead">Lihat perbedaan Pokémon dari 11 sisi. Tanda di samping tiap aspek menunjukkan asal datanya.</p>
+    <div class="seg" role="tablist"><button data-m="side" class="${state.cmpMode === 'side' ? 'on' : ''}">${ic('i-compare','sm')}Berdampingan</button><button data-m="table" class="${state.cmpMode === 'table' ? 'on' : ''}">${ic('i-grid','sm')}Tabel roster</button></div>
+    <div id="cmpBody"></div>`;
+  document.querySelectorAll('.seg button').forEach(b => b.onclick = () => { state.cmpMode = b.dataset.m; LS('ug.cmpMode', state.cmpMode); viewCompare(); });
+  if (state.cmpMode === 'table') return viewTable();
+  const body = $('cmpBody');
+  body.innerHTML = `
+    <div class="picks">${[0,1,2].map(i => { const p = ps[i]; return p ? `<div class="pk" data-slot="${i}"><span class="sw" style="background:${SLOT_COLORS[i]}"></span>${ps.length > 2 ? `<button class="rm" data-rm="${i}" aria-label="Hapus ${esc(p.name)}">${ic('i-close','sm')}</button>` : ''}<img src="${p.image}" alt=""><span class="n">${esc(p.name)}</span></div>` : `<button class="pk add" data-slot="${i}">${ic('i-plus')}Tambah</button>`; }).join('')}</div>
+    <div style="display:flex;gap:8px;margin:10px 0 12px;flex-wrap:wrap">
+      <button class="btn" id="simBtn">${ic('i-flame','sm')}Yang mirip ${esc(ps[0].name)}</button>
+      <button class="btn" id="swapBtn">Ganti patokan</button>
+    </div>
+    <div class="card"><h2>${ic('i-star')}Rating resmi ${srcBadge('resmi')}</h2>
+      <div class="chips" style="margin-bottom:6px">${ps.map((p, j) => `<span class="chip" style="cursor:default"><span class="dot" style="background:${SLOT_COLORS[j]}"></span>${esc(p.name)}</span>`).join('')}</div>
+      ${dotPlot(ps)}
+      <details class="more"><summary>Arti tiap rating ${ic('i-down','sm')}</summary>${RATINGS.map(r => `<div class="pt up">${ic(r.ic)}<span><b>${r.n}:</b> ${esc(r.ex)}</span></div>`).join('')}</details>
+      ${ps.some(p => p.ratingsNote) ? `<div class="warn">${ic('i-alert','sm')}<span>Rating ${ps.filter(p => p.ratingsNote).map(p => p.name).join(', ')} masih berbeda antar sumber dan perlu dicek di layar game.</span></div>` : ''}
+    </div>
+    <div class="card"><h2>${ic('i-info')}Kesimpulan singkat</h2><ul class="summary" style="margin:0;padding-left:18px">${summary(ps).map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+      <p class="small" style="margin:8px 0 0">${esc(ps[0].name)} jadi patokan. Ketuk "Ganti patokan" untuk menukar urutan.</p></div>
+    <div class="card"><h2>${ic('i-grid')}Aspek lainnya</h2>
+      <div style="overflow-x:auto"><table class="cmp-table"><thead><tr><th></th>${ps.map((p, j) => `<th><span class="sw" style="background:${SLOT_COLORS[j]}"></span>${esc(p.name)}</th>`).join('')}</tr></thead><tbody>
+      ${ASPECTS.map(a => `<tr><th scope="row">${a.n} ${qBtn('a-' + a.k)}<br>${srcBadge(a.src)}${explainHtml('a-' + a.k, a.ex)}</th>${ps.map(p => `<td><b>${esc(a.v(p))}</b>${a.sub && a.sub(p) ? `<div class="small">${esc(a.sub(p))}</div>` : ''}</td>`).join('')}</tr>`).join('')}
+      <tr><th scope="row">Mirip Cinderace</th>${ps.map(p => `<td><span class="fireTag">${ic('i-flame')}${p.cinderace.similarity}/10</span></td>`).join('')}</tr>
+      <tr><th scope="row">Detail</th>${ps.map(p => `<td><a href="#/p/${p.slug}">Buka panduan</a></td>`).join('')}</tr>
+      </tbody></table></div></div>`;
+  body.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { state.explain[b.dataset.q] = !state.explain[b.dataset.q]; viewCompare(); });
+  body.querySelectorAll('.pk').forEach(el => el.onclick = e => { if (e.target.closest('[data-rm]')) return; openPicker(+el.dataset.slot); });
+  body.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { state.cmp.splice(+b.dataset.rm, 1); saveCmp(); });
+  $('simBtn').onclick = () => { state.cmp = [ps[0].slug, ...similarTo(ps[0].slug, 2)]; saveCmp(); toast('Dua Pokémon dengan rating paling mirip ' + ps[0].name); };
+  $('swapBtn').onclick = () => { state.cmp.push(state.cmp.shift()); saveCmp(); };
+}
+function saveCmp(){ LS('ug.cmp', JSON.stringify(state.cmp)); viewCompare(); }
+function openPicker(slot){
+  const bg = document.createElement('div'); bg.className = 'sheet-bg';
+  bg.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="Pilih Pokémon"><div style="display:flex;align-items:center"><h3>Pilih Pokémon</h3><div class="spacer"></div><button class="btn ghost" id="pkClose" aria-label="Tutup">${ic('i-close')}</button></div>
+    <div class="searchwrap">${ic('i-search')}<input class="field" id="pkSearch" placeholder="Cari…" autocomplete="off"></div><div class="opts" id="pkOpts"></div></div>`;
+  document.body.appendChild(bg);
+  const close = () => bg.remove();
+  const draw = q => { $('pkOpts').innerHTML = DATA.filter(p => !q || p.name.toLowerCase().includes(q)).map(p => `<button class="opt" data-s="${p.slug}" ${state.cmp.includes(p.slug) ? 'disabled' : ''}><img src="${p.image}" alt="">${esc(p.name)}</button>`).join('');
+    $('pkOpts').querySelectorAll('.opt').forEach(o => o.onclick = () => { if (o.disabled) return; if (slot < state.cmp.length) state.cmp[slot] = o.dataset.s; else state.cmp.push(o.dataset.s); close(); saveCmp(); }); };
+  draw(''); $('pkSearch').oninput = e => draw(e.target.value.trim().toLowerCase());
+  $('pkClose').onclick = close; bg.onclick = e => { if (e.target === bg) close(); };
+}
+const TABLE_ASPECTS = [
+  ...RATINGS.map(r => ({k: r.k, n: r.n, src: 'resmi', val: p => p.ratings[r.k], show: p => stars(p.ratings[r.k]) + ` <span class="muted">${fmt(p.ratings[r.k])}</span>`})),
+  {k:'cc', n:'Kontrol lawan', src:'hitung', val:p => p.compare.ccCount, show:p => `<span class="bar"><i style="width:${Math.min(100, p.compare.ccCount / 6 * 100)}%"></i></span>${p.compare.ccCount}`},
+  {k:'sustain', n:'Daya pulih', src:'hitung', val:p => p.compare.sustainCount, show:p => `<span class="bar"><i style="width:${Math.min(100, p.compare.sustainCount / 6 * 100)}%"></i></span>${p.compare.sustainCount}`},
+  {k:'easy', n:'Paling mudah', src:'resmi', val:p => -DIFF_N[p.difficulty], show:p => DIFF[p.difficulty]},
+  {k:'sim', n:'Mirip Cinderace', src:'guide', val:p => p.cinderace.similarity, show:p => `<span class="fireTag">${ic('i-flame')}${p.cinderace.similarity}</span>`}
+];
+function viewTable(){
+  const A = TABLE_ASPECTS.find(a => a.k === state.aspect) || TABLE_ASPECTS[0];
+  const arr = DATA.filter(p => state.trole === 'all' || p.role === state.trole).sort((a, b) => A.val(b) - A.val(a) || a.name.localeCompare(b.name));
+  $('cmpBody').innerHTML = `
+    <div class="small" style="margin-bottom:6px">Urutkan berdasarkan:</div>
+    <div class="chips" id="aspChips">${TABLE_ASPECTS.map(a => `<button class="chip ${a.k === A.k ? 'on' : ''}" data-a="${a.k}">${a.n}</button>`).join('')}</div>
+    <div class="chips" id="trChips" style="margin:6px 0 12px">${['all', ...ROLES].map(r => `<button class="chip ${state.trole === r ? 'on' : ''}" data-r="${r}">${r === 'all' ? 'Semua peran' : `<span class="dot" style="background:${ROLE_COLOR[r]}"></span>${r}`}</button>`).join('')}</div>
+    <div class="card"><h2>${esc(A.n)} ${srcBadge(A.src)}</h2>
+      <div class="rlist">${arr.map((p, i) => `<div class="rr"><span class="rk">${i + 1}</span><img src="${p.image}" alt=""><button class="nm" data-go="${p.slug}">${esc(p.name)}<small>${esc(p.role)}</small></button><span class="v">${A.show(p)}</span><button class="addc ${state.cmp.includes(p.slug) ? 'on' : ''}" data-add="${p.slug}" aria-label="Tambah ${esc(p.name)} ke perbandingan">${state.cmp.includes(p.slug) ? ic('i-check','sm') : ic('i-plus','sm')}</button></div>`).join('')}</div>
+      <p class="small" style="margin:10px 0 0">Ketuk + untuk memasukkan Pokémon ke mode Berdampingan (maksimal 3).</p></div>`;
+  $('aspChips').querySelectorAll('.chip').forEach(b => b.onclick = () => { state.aspect = b.dataset.a; LS('ug.aspect', state.aspect); viewTable(); });
+  $('trChips').querySelectorAll('.chip').forEach(b => b.onclick = () => { state.trole = b.dataset.r; viewTable(); });
+  document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go('#/p/' + b.dataset.go));
+  document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => {
+    const s = b.dataset.add;
+    if (state.cmp.includes(s)) { if (state.cmp.length > 2) state.cmp = state.cmp.filter(x => x !== s); else return toast('Minimal 2 Pokémon untuk dibandingkan.'); }
+    else { if (state.cmp.length >= 3) state.cmp.shift(); state.cmp.push(s); toast(bySlug[s].name + ' masuk perbandingan'); }
+    LS('ug.cmp', JSON.stringify(state.cmp)); viewTable();
+  });
+}
+
+/* ================= KAMUS ================= */
+function viewKamus(){
+  $('view').innerHTML = `<h1 class="page-title">Kamus istilah</h1>
+    <p class="lead">Istilah yang sering dipakai pemain. Di app ini kami pakai kata di kiri. Istilah aslinya ditulis kecil, supaya kamu tetap mengenalinya di dalam game.</p>
+    <div class="searchwrap" style="margin-bottom:12px">${ic('i-search')}<input class="field" id="glSearch" placeholder="Cari istilah…" autocomplete="off" aria-label="Cari istilah"></div>
+    <div class="card gl" id="glList"></div>`;
+  const draw = q => { const arr = GLOSS.filter(g => !q || (g.term + ' ' + g.id + ' ' + g.desc).toLowerCase().includes(q));
+    $('glList').innerHTML = arr.length ? arr.map(g => `<div class="g"><div class="t">${esc(g.id)}</div><div class="o">${esc(g.term)}</div><div class="d">${esc(g.desc)}</div></div>`).join('') : '<div class="empty">Istilah tidak ditemukan.</div>'; };
+  draw(''); $('glSearch').oninput = e => draw(e.target.value.trim().toLowerCase());
+}
+
+/* ================= ROUTER ================= */
+function go(h){ if (location.hash === h) route(); else location.hash = h; }
+function setNav(k){ document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === k)); }
+function route(){
+  const h = location.hash || '#/';
+  const m = h.match(/^#\/p\/([a-z0-9-]+)(?:\/(\w+))?/);
+  const p = m && bySlug[m[1]];
+  $('backBtn').classList.toggle('hidden', !p);
+  $('brandImg').classList.toggle('hidden', !p);
+  if (p) { setNav('roster'); $('brandImg').src = p.image; $('brandTitle').textContent = p.name; $('brandSub').textContent = ''; viewDetail(p, m[2]); LS('ug.last', p.slug); window.scrollTo({top: 0}); return; }
+  $('brandTitle').textContent = 'UNITE Guide'; $('brandSub').textContent = '';
+  if (h.startsWith('#/bandingkan')) { setNav('compare'); viewCompare(); }
+  else if (h.startsWith('#/kamus')) { setNav('kamus'); viewKamus(); }
+  else { setNav('roster'); viewRoster(); }
+  window.scrollTo({top: 0});
+}
+$('backBtn').onclick = () => { if (history.length > 1) history.back(); else go('#/'); };
+window.addEventListener('hashchange', route);
+window.addEventListener('scroll', () => $('topbar').classList.toggle('scrolled', window.scrollY > 4), {passive: true});
+$('footer').innerHTML = `Data ${esc(window.UNITE_VERSION || '')} · ${DATA.length} Pokémon · Rating resmi dari Bulbapedia, dicek ke unite.pokemon.com. Nama jurus dicek ke Serebii dan Bulbapedia. Build dan item dari game8 dan dittobase. Teks adalah ringkasan, bukan teks resmi game.`;
 route();
 
-/* ---------- PWA ---------- */
-let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;$('installBtn').classList.remove('hidden');});
-$('installBtn').onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('installBtn').classList.add('hidden');};
-window.addEventListener('appinstalled',()=>{$('installBtn').classList.add('hidden');toast('Terinstal! Buka dari home screen.');});
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').then(reg=>{
-    reg.addEventListener('updatefound',()=>{const nw=reg.installing;nw&&nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)toast('Versi baru siap — tutup & buka lagi app-nya.');});});
-  }).catch(()=>{});});
+/* ================= PWA ================= */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; $('installBtn').classList.remove('hidden'); });
+$('installBtn').onclick = async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; $('installBtn').classList.add('hidden'); };
+window.addEventListener('appinstalled', () => { $('installBtn').classList.add('hidden'); toast('Terpasang! Buka dari layar utama HP.'); });
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => { const nw = reg.installing; nw && nw.addEventListener('statechange', () => { if (nw.state === 'installed' && navigator.serviceWorker.controller) toast('Versi baru siap. Tutup lalu buka lagi app-nya.'); }); });
+  }).catch(() => {}); });
 }
 })();
 </script>
